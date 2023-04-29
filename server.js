@@ -47,16 +47,6 @@ var PostSchema = new mongoose.Schema( {
   comments: [String],
   likes: { type: Number, default: 0 }
 });
-  /*
-  <div class='post'>
-	<div class='username_date'>Bob April 19, 2023, 10:30 AM</div>
-	<div class='posttext'>This is the post text</div>
-	<div class='allcomments'> 
-		Comment 1
-		Comment 2
-	</div>
-  </div>
-  */
 
 var Post = mongoose.model('Post', PostSchema);
 
@@ -65,9 +55,6 @@ var messageSchema = new mongoose.Schema({
   message: String,
 });
 var Item = mongoose.model('Item',messageSchema);
-
-
-
 
 function authenticate(req, res, next) {
   let c = req.cookies;
@@ -102,7 +89,6 @@ app.use('*', (req, res, next) => {
   }
   next();
 });
-
 
 app.use(express.static('public_html'));
 
@@ -139,22 +125,6 @@ app.post('/create/item/', (req, res) => {
   });
 });
 
-/**
- * This route is for creating a new list category.
- */
-// app.post('/create/category/', (req, res) => {
-//   let CategoryToSave = req.body;
-//   var newCategory = new Category(CategoryToSave);
-//   let p1 = newCategory.save();
-//   p1.then( (doc) => { 
-//     res.end('SAVED SUCCESFULLY');
-//   });
-//   p1.catch( (err) => { 
-//     console.log(err);
-//     res.end('FAILED TO CREATE A CATEGORY');
-//   });
-// });
-
 app.post('/create/post/', (req, res) => {
   let PostToSave = req.body;
   var newPost = new Post(PostToSave);
@@ -169,19 +139,6 @@ app.post('/create/post/', (req, res) => {
   });
 });
 
-/**
- * This route is for fetching all of the categories stored in the database.
- */
-// app.get('/categories/', (req, res) => {
-//     let p1 = Category.find({}).exec();
-//     p1.then( (results) => { 
-//       res.end( JSON.stringify(results) );
-//     });
-//     p1.catch( (error) => {
-//       console.log(error);
-//       res.end('FAIL');
-//     });
-// });
 app.get('/posts/', (req, res) => {
   let p1 = Post.find({}).exec();
   
@@ -260,9 +217,6 @@ app.get('/account/login/:username/:password', (req, res) => {
     res.end('login failed');
   });
 });
-
-
-
 
 app.get('/chats', (req, res) => {
 

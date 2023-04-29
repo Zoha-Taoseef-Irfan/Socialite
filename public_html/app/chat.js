@@ -18,30 +18,6 @@ function chat(){
     });
   }
 
-// function getItems() {
-//     //use the fetch api to get from the server
-//     let url = '/chats';
-//     let p = fetch(url);
-//     let ps = p.then((response) => {
-//         return response.text();
-//     });
-//     ps.then((text) => {
-//         document.addEventListener("DOMContentLoaded", function() {
-//             // Your code that interacts with the DOM goes here
-//             setInterval(function() {
-//               // Get the element you want to modify
-//               var x = document.getElementById("messages");
-          
-//               // Check if the element exists before trying to modify it
-//               if (x) {
-//                 x.innerHTML = text;
-//               }
-//             }, 1000); // Set interval to run every 1 second
-//           });
-//       // display the results on the screen (front end)
-//     });
-//   }
-  
   /*
   This function is ran to send messages to the server. When the user hits the Send Message button, 
   the alias and the message text is grabbed, the information sent to the server for storage  and the message text box should be cleared, 
