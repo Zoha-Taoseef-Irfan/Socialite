@@ -2,7 +2,7 @@ function chat(){
     window.location.href = '/app/chat.html';
 }
   
-  function getItems() {
+  function getMessageItems() {
     //use the fetch api to get from the server
     let url = '/chats';
     let p = fetch(url);
@@ -23,7 +23,7 @@ function chat(){
   the alias and the message text is grabbed, the information sent to the server for storage  and the message text box should be cleared, 
   so that the user can start typing the next message.
   */
-  function createItem() {
+  function createMessageItem() {
   
     let alias = document.getElementById('alias').value;
     let message = document.getElementById('message').value;
@@ -42,7 +42,7 @@ function chat(){
     fetch(url, options )
         .then( response => {
             // Do something with response.
-            getItems();
+            getMessageItems();
             document.getElementById('alias').value ="";
             document.getElementById('message').value ="";       
     });
@@ -50,4 +50,4 @@ function chat(){
   
 
 
-    setInterval(getItems,1000);
+    setInterval(getMessageItems,1000);
