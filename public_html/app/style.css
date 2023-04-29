@@ -1,0 +1,174 @@
+
+body {
+  background-color: #f0f2f5;
+  font-family: Arial, sans-serif;
+}
+
+/* Segments */
+.segment {
+  background-color: #fff;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Social segment */
+#social {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  background-color: #3b5998;
+  color: #fff;
+  padding: 20px;
+}
+
+/* Create Post segment */
+#createPost {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 20px;
+}
+
+#createPost > div {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#createPost label {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+#createPost input[type="text"] {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #f0f2f5;
+}
+
+#createPost input[type="button"] {
+  padding: 10px 20px;
+  background-color: #3b5998;
+  border-radius: 5px;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Posts segment */
+#posts {
+  display: flex;
+  flex-direction: column;
+  background-color: #f0f2f5;
+  padding: 20px;
+}
+
+/* Post */
+.post {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.post img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+
+.post .content {
+  display: flex;
+  flex-direction: column;
+}
+
+.post .content h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.post .content p {
+  font-size: 14px;
+  margin: 5px 0 0 0;
+}
+
+.post .actions {
+  margin-left: auto;
+}
+
+.post .actions button {
+  background-color: transparent;
+  border: none;
+  color: #3b5998;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 5px 10px;
+  margin-left: 10px;
+}
+
+
+
+
+
+
+*{
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial;
+  font-size: 15pt;
+  margin: 0px;
+  padding: 0px;
+}
+
+
+#messages{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: aqua;
+    height:70%;
+    width: 100%;
+}
+#createMessage{
+    background-color: rgb(255, 174, 0);
+    top:70%;
+    height:30%;
+    width:100%;
+    
+}
+#createItemButton{
+    font: large;
+    height:12%;
+    width:12%;
+    background-color: white;
+    margin: 10px;
+}
+
+#alias{
+  padding: 10px;
+  font: large;
+  height:15%;
+  width:20%;
+  background-color: white;
+  margin: 10px;
+}
+
+#message{
+  padding: 10px;
+  font: large;
+  height:15%;
+  width:30%;
+  background-color: rgb(241, 242, 255);
+  margin: 10px;
+}
+

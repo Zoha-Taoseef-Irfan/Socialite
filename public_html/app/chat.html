@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <script src="./chat.js"></script>
+  <title>Socialite</title>
+</head>
+<body>
+  <div class="segment" id="messages"> </div>
+
+  <div class="segment" id="createMessage">
+    <!-- <div>CREATE ITEM</div> -->
+    <label for="alias">Alias</label>
+    <input id="alias" type="text"> 
+    <br>
+    <label for="message">Message</label>
+    <input id="message" type="text"> 
+    <br>
+    <input type="button" id="createItemButton" onclick="createItem();" value="Send Message">
+  </div>
+  <script>
+    getItems();
+  </script>
+  
+</body>
+</html>
