@@ -20,6 +20,10 @@
     <label for="passwordLogin">Password</label>
     <input id="passwordLogin" type="password"> </input>
     <br/>
+    <label for="avatar_upload">Select avatar</label>
+    <input id="avatar_upload" type="file">
+    <br/>
+    <button type="submit">Convert</button>
     <input type="button" onclick="login();" value="Log in"/>
   </div>
 
@@ -27,13 +31,20 @@
 
   <div>
     <div>Create account</div>
-    <label for="usernameCreate">Username</label>
-    <input id="usernameCreate" type="text"> </input>
-    <br/>
-    <label for="passwordCreate">Password</label>
-    <input id="passwordCreate" type="password"> </input>
-    <br/>
-    <input type="button" onclick="createAccount();" value="Create Account"/>
+    <form enctype="multipart/form-data" method="post" id="fileUploadForm">
+      <div class="form-group">
+        <label for="usernameCreate">Username</label>
+        <input id="usernameCreate" name="usernameCreate" type="text"> </input>
+        <br/>
+        <label for="passwordCreate">Password</label>
+        <input id="passwordCreate" name="passwordCreate" type="password"> </input>
+        <br/>
+        <label for="file_upload">Upload avatar</label>
+        <input type="file" id="file_upload" name="avatar""></input>
+        <input type="submit" value="Create user" id="btnSubmit">
+        <span id="result"></span>
+      </div>
+    </form>
   </div>
 
 </body>

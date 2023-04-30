@@ -5,6 +5,9 @@ const fs = require('fs');
 const crypto = require('crypto');
 const cm = require('./customsessions');
 
+const multer  = require('multer')
+const upload = multer({dest: __dirname + '/uploads/images'});
+
 const parser = require('body-parser')
 
 cm.sessions.startCleanup();
@@ -25,11 +28,7 @@ mongoose.connection.on('error', () => {
   hash: String,
   //friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   friends: [Number], //mongodb ids of this users friend
-  img:
-  {
-      data: Buffer,
-      contentType: String
-  } // https://www.geeksforgeeks.org/upload-and-retrieve-image-on-mongodb-using-mongoose/
+  img: String
 });
 
 var User = mongoose.model('User', UserSchema);
@@ -151,18 +150,22 @@ app.get('/posts/', (req, res) => {
   });
 });
 
+
 /**
  * This route is for creating a new user account.
  */
-app.get('/account/create/:username/:password', (req, res) => {
-  let p1 = User.find({username: req.params.username}).exec();
+app.post('/account/create/', upload.single("avatar"), (req, res) => {
+  console.log(req.file)
+  console.log(req.file.path)
+  console.log(req.baseUrl + '/app/index.html')
+  let p1 = User.find({username: req.body.usernameCreate}).exec();
   p1.then( (results) => { 
     if (results.length > 0) {
       res.end('That username is already taken.');
     } else {
 
       let newSalt = Math.floor((Math.random() * 1000000));
-      let toHash = req.params.password + newSalt;
+      let toHash = req.body.passwordCreate + newSalt;
       var hash = crypto.createHash('sha3-256');
       let data = hash.update(toHash, 'utf-8');
       let newHash = data.digest('hex');
@@ -170,10 +173,11 @@ app.get('/account/create/:username/:password', (req, res) => {
       var newUser = new User({ 
         username: req.params.username,
         salt: newSalt,
-        hash: newHash
+        hash: newHash,
+        img: req.file.path
       });
       newUser.save().then( (doc) => { 
-          res.end('Created new account!');
+          res.end(req.file.path)
         }).catch( (err) => { 
           console.log(err);
           res.end('Failed to create new account.');
