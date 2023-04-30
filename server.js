@@ -153,6 +153,17 @@ app.get('/posts/', (req, res) => {
   });
 });
 
+app.get('/posts/:user', (req, res) => {
+  let p1 = Post.find({username:req.params.user}).exec();
+  p1.then( (results) => { 
+    res.end( JSON.stringify(results) );
+  });
+  p1.catch( (error) => {
+    console.log(error);
+    res.end('FAIL');
+  });
+});
+
 /**
  * This route is for creating a new user account.
  */

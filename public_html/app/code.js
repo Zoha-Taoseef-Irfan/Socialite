@@ -9,6 +9,33 @@ function getUserName(){
   currentUser = userName;
   return currentUser;
 }
+function getPostsForUser() {
+  let url = '/posts/'+ currentUser;
+  // TODO go back and change the /categories/ route to /posts/
+  let p = fetch(url);
+  let ps = p.then( (response) => {
+    return response.json();
+  }).then((objects) => { 
+    let html = '';
+    for (i in objects) {
+      // html += '<div class="post">' 
+      //             + objects[i].username + objects[i].dateCreated + objects[i].text + 
+      //         '</div>\n'
+      html += generatePostHTML(objects[i].username, objects[i].dateCreated, objects[i].text, objects[i].comments);
+      // TODO add button for like, and comment functionality here
+    }
+    let x = document.getElementById('userPosts');
+    if (x){
+      x.innerHTML = html;
+    }
+    
+  }).catch(() => { 
+    alert('Something went wrong trying to set html for posts');
+  });
+}
+
+setInterval(getPostsForUser, 1000)
+
 
 function getPosts() {
   let url = '/posts/';
