@@ -24,7 +24,7 @@ $(document).ready(function () {
   // Create a FormData object 
       var data = new FormData(form);
 
-  // If you want to add an extra field for the FormData
+  // For an extra field for the FormData
       data.append("CustomField", "This is some extra data, testing");
 
   // disabled the submit button
@@ -48,7 +48,6 @@ $(document).ready(function () {
           },
           error: function (e) {
 
-              $("#result").text(e.responseText);
               console.log("ERROR : ", e);
               $("#btnSubmit").prop("disabled", false);
 

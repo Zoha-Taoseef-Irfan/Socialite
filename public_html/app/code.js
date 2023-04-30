@@ -19,10 +19,7 @@ function getPosts() {
   }).then((objects) => { 
     let html = '';
     for (i in objects) {
-      // html += '<div class="post">' 
-      //             + objects[i].username + objects[i].dateCreated + objects[i].text + 
-      //         '</div>\n'
-      html += generatePostHTML(objects[i].username, objects[i].dateCreated, objects[i].text, objects[i].comments);
+      html += generatePostHTML(objects[i].username, objects[i].dateCreated, objects[i].text, objects[i].comments, objects[i].avatar);
       // TODO add button for like, and comment functionality here
     }
     let x = document.getElementById('posts');
@@ -30,43 +27,56 @@ function getPosts() {
       x.innerHTML = html;
     }
     
-  }).catch(() => { 
+  }).catch((error) => { 
     alert('Something went wrong trying to set html for posts');
+    console.log(error);
   });
 }
 
-setInterval(getPosts, 1000)
+function generatePostHTML(username, date, postText, comments, img) {
+  console.log("username for generating html: "+username)
 
-function generatePostHTML(username, date, postText, comments) {
   // Create the HTML elements
   const postDiv = document.createElement('div');
+  const postHeaderDiv = document.createElement('div');
+  const postContentDiv = document.createElement('div');
+  const postCommentsDiv = document.createElement('div');
+
   const usernameDateDiv = document.createElement('div');
   const postTextDiv = document.createElement('div');
-  const allCommentsDiv = document.createElement('div');
+  const avatarImg = document.createElement('img');
+
+  // Change appearance
+  avatarImg.width = 100;
+  avatarImg.height = 100;
 
   // Set the class names
   postDiv.className = 'post';
+  postHeaderDiv.className= 'postHeader';
+  postContentDiv.className= 'postContent';
   usernameDateDiv.className = 'username_date';
   postTextDiv.className = 'posttext';
-  allCommentsDiv.className = 'allcomments';
+  postCommentsDiv.className = 'postComments';
+  avatarImg.className= 'post_avatar';
 
-  // Set the text content
+  // Set content
   usernameDateDiv.textContent = `${username} ${date}`;
   postTextDiv.textContent = postText;
-  allCommentsDiv.textContent = comments.join('\n');
+  postCommentsDiv.textContent = comments.join('\n');
+  avatarImg.src = img;
 
   // Append the child elements
-  postDiv.appendChild(usernameDateDiv);
-  postDiv.appendChild(postTextDiv);
-  postDiv.appendChild(allCommentsDiv);
+  postHeaderDiv.appendChild(avatarImg);
+  postHeaderDiv.appendChild(usernameDateDiv);
+  postContentDiv.appendChild(postTextDiv);
 
+  postDiv.appendChild(postHeaderDiv);
+  postDiv.appendChild(postContentDiv);
+  postDiv.appendChild(postCommentsDiv);
+  
   // Return the HTML string
   return postDiv.outerHTML;
 }
-
-
-
-
 
 function createPost() {
   let postTXT = document.getElementById('postText').value;
