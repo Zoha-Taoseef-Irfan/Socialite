@@ -27,19 +27,20 @@
 
   <div>
     <div class="loginOrCreate">Create account</div>
-    <label for="usernameCreate">Username</label>
-    <input id="usernameCreate" type="text"> </input>
-    <br/>
-    <label for="passwordCreate">Password</label>
-    <input id="passwordCreate" type="password"> </input>
-    <br/>
-    <label for="emailCreate">Email</label>
-    <input id="emailCreate" type="email"> </input>
-    <br/>
-    <label for="cityCreate">Your City</label>
-    <input id="cityCreate" type="text"> </input>
-
-    <input type="button" onclick="createAccount();" value="Create Account"/>
+    <form enctype="multipart/form-data" method="post" id="fileUploadForm">
+      <div class="form-group">
+        <label for="usernameCreate">Username</label>
+        <input id="usernameCreate" name="usernameCreate" type="text"> </input>
+        <br/>
+        <label for="passwordCreate">Password</label>
+        <input id="passwordCreate" name="passwordCreate" type="password"> </input>
+        <br/>
+        <label for="file_upload">Upload avatar</label>
+        <input type="file" id="file_upload" name="avatar""></input>
+        <input type="submit" value="Create user" id="btnSubmit">
+        <div id="result"></div>
+      </div>
+    </form>
   </div>
 
 </body>
