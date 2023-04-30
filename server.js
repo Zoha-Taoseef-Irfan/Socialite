@@ -175,7 +175,7 @@ app.get('/posts/', (req, res) => {
   });
 });
 
-//TODO check whether this route is reduntant
+
 app.get('/posts/:user', (req, res) => {
   let p1 = Post.find({username:req.params.user}).exec();
   p1.then( (results) => { 
@@ -191,8 +191,6 @@ app.get('/posts/:user', (req, res) => {
  * This route is for creating a new user account.
  */
 app.post('/account/create/', upload.single("avatar"), (req, res) => {
-  //TODO update with city and 
-  console.log('trimmed path: '+getImgRoute(req.file.path))
   let p1 = User.find({username: req.body.usernameCreate}).exec();
   p1.then( (results) => { 
     if (results.length > 0) {
