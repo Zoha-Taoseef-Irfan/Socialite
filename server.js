@@ -23,6 +23,8 @@ mongoose.connection.on('error', () => {
   username: String,
   salt: Number,
   hash: String,
+  email:String,
+  city:String,
   //friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   friends: [Number], //mongodb ids of this users friend
   img:
@@ -154,7 +156,7 @@ app.get('/posts/', (req, res) => {
 /**
  * This route is for creating a new user account.
  */
-app.get('/account/create/:username/:password', (req, res) => {
+app.get('/account/create/:username/:password/:email/:city', (req, res) => {
   let p1 = User.find({username: req.params.username}).exec();
   p1.then( (results) => { 
     if (results.length > 0) {
@@ -166,11 +168,15 @@ app.get('/account/create/:username/:password', (req, res) => {
       var hash = crypto.createHash('sha3-256');
       let data = hash.update(toHash, 'utf-8');
       let newHash = data.digest('hex');
+      let email = req.params.email;
+      let city = req.params.city;
 
       var newUser = new User({ 
         username: req.params.username,
         salt: newSalt,
-        hash: newHash
+        hash: newHash,
+        email:email,
+        city:city
       });
       newUser.save().then( (doc) => { 
           res.end('Created new account!');
@@ -191,6 +197,8 @@ app.get('/account/create/:username/:password', (req, res) => {
 app.get('/account/login/:username/:password', (req, res) => {
   let u = req.params.username;
   let p = req.params.password;
+  let q = req.params.email;
+  let r = req.params.city;
   let p1 = User.find({username:u}).exec();
   p1.then( (results) => { 
     if (results.length == 1) {
