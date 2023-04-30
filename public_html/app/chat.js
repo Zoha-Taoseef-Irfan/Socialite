@@ -6,7 +6,11 @@ function getUserName(){
   currentUser = userName;
   return currentUser;
 }
-
+//
+function myProfile(){
+  window.location.href = '/app/profile.html';
+}
+//
 function chat(){
     window.location.href = '/app/chat.html';
 }
@@ -58,10 +62,11 @@ function scrollToLatestMessage() {
         .then( response => {
             // Do something with response.
             getMessageItems();
-            document.getElementById('message').value ="";       
+            document.getElementById('message').value ="";    
+            scrollToLatestMessage();   
     });
     
-    scrollToLatestMessage();
+   
   }
   
 
