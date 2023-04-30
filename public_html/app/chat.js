@@ -1,5 +1,18 @@
+currentUser = getUserName();
+
+function getUserName(){
+  console.log(document.cookie);
+  let userName = document.cookie.split("%22")[3];
+  currentUser = userName;
+  return currentUser;
+}
+
 function chat(){
     window.location.href = '/app/chat.html';
+}
+function scrollToLatestMessage() {
+  const messagesContainer = document.getElementById('messages');
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
   
   function getMessageItems() {
@@ -14,8 +27,10 @@ function chat(){
       let x = document.getElementById('messages');
       if (x){
         x.innerHTML= text;
+        scrollToLatestMessage();
       }
     });
+    
   }
 
   /*
@@ -25,7 +40,7 @@ function chat(){
   */
   function createMessageItem() {
   
-    let alias = document.getElementById('alias').value;
+    let alias = currentUser;
     let message = document.getElementById('message').value;
   
     let url = '/chats/post';
@@ -43,11 +58,12 @@ function chat(){
         .then( response => {
             // Do something with response.
             getMessageItems();
-            document.getElementById('alias').value ="";
             document.getElementById('message').value ="";       
     });
+    
+    scrollToLatestMessage();
   }
   
 
 
-    setInterval(getMessageItems,1000);
+    setInterval(getMessageItems,1500);

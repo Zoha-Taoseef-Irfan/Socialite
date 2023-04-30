@@ -15,8 +15,10 @@ function login() {
 function createAccount() {
   let u = $('#usernameCreate').val();
   let p = $('#passwordCreate').val();
+  let q = $('#emailCreate').val();
+  let r = $('#cityCreate').val();
   $.get(
-    '/account/create/' + u + '/' + encodeURIComponent(p),
+    '/account/create/' + u + '/' + encodeURIComponent(p) + '/' + encodeURIComponent(q) +'/'  + encodeURIComponent(r),
     (data, status) => {
         alert(data);
   });
