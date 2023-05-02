@@ -1,4 +1,4 @@
-
+// hello
 function getPosts() {
   let url = '/posts/';
   // TODO go back and change the /categories/ route to /posts/
