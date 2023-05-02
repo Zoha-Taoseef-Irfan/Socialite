@@ -24,40 +24,77 @@ body {
 }
 
 /* Create Post segment */
-#createPost {
-  display: flex;
-  flex-direction: column;
+.segment {
   background-color: #fff;
+  border: 1px solid #dddfe2;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.04);
   padding: 20px;
+  width: 90%;
+  margin: 20px auto;
 }
 
-#createPost > div {
-  font-size: 18px;
-  font-weight: bold;
+.segment > div:first-child {
+  font-size: 20px;
+  font-weight: 600;
   margin-bottom: 10px;
 }
 
-#createPost label {
+.form-group {
+  margin-top: 20px;
+}
+
+.form-group label {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.form-group input[type="text"],
+.form-group input[type="file"] {
+  border: 1px solid #dddfe2;
+  border-radius: 4px;
+  color: #1d2129;
   font-size: 14px;
-  font-weight: bold;
-}
-
-#createPost input[type="text"] {
   padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  border: none;
-  background-color: #f0f2f5;
+  width: 100%;
+  margin-top: 5px;
 }
 
-#createPost input[type="button"] {
-  padding: 10px 20px;
+.postImageLabel::before {
+  content: "Upload an image";
+  color: #1d2129;
+  font-size: 14px;
+  font-weight: 600;
+  margin-right: 10px;
+}
+
+#createPostButton,
+#goToMyProfileButton,
+#goToMessageButton {
   background-color: #3b5998;
-  border-radius: 5px;
   border: none;
+  border-radius: 4px;
   color: #fff;
-  font-weight: bold;
   cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  margin-right: 10px;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+#createPostButton:hover,
+#goToMyProfileButton:hover,
+#goToMessageButton:hover {
+  background-color: #5266ba;
+}
+
+#result {
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 /* Posts segment */
@@ -109,6 +146,36 @@ body {
   padding-top: 8px;
 }
 
+/* Like "button" */
+
+.fb-like-button {
+  background-color: #3b5998;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.fb-like-icon {
+  background-image: url('./icons/like.png');
+  background-repeat: no-repeat;
+  background-position: -1px -1px;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.fb-like-text {
+  display: inline-block;
+  vertical-align: middle;
+}
 
 *{
   box-sizing: border-box;

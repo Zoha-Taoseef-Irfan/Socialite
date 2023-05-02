@@ -13,18 +13,22 @@
     <h2>Socialite</h2>
   </div>
     
-  <div class="segment" id="createPost">
+  <form enctype="multipart/form-data" method="post" class="segment" id="createPost">
     <div>Create Post</div>
     <br/>
-    <label for="postText">Enter post text</label>
-    <input id="postText" type="text"> </input>
-    <br/>
-    <!-- TODO image left out for now -->
-
-    <input type="button" id="createPostButton" onclick="createPost();" value="Create Post"/>
-    <input type="button" id="goToMyProfileButton" onclick="myProfile();" value="My Profile"/>
-    <input type="button" id="goToMessageButton" onclick="chat();" value="Chat"/>
-  </div>
+    <div class="form-group">
+      <label for="postText">Enter post text</label>
+      <input id="postText" type="text"> </input>
+      <br/>
+      <label for="postImageFile" class="postImageLabel"></label>
+      <input type="file" id="postImageFile" name="postImage"></input>
+      <br/>
+      <input type="button" id="createPostButton" onclick="createPost();" value="Create Post"/>
+      <input type="button" id="goToMyProfileButton" onclick="myProfile();" value="My Profile"/>
+      <input type="button" id="goToMessageButton" onclick="chat();" value="Chat"/>
+      <div id="result"></div>
+    </div>
+  </form>
 
   <div class="segment" id="posts"> </div>
 

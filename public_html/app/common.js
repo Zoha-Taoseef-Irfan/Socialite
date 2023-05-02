@@ -20,7 +20,11 @@ function generatePostHTML(username, date, postText, comments, img) {
     const usernameDateDiv = document.createElement('div');
     const postTextDiv = document.createElement('div');
     const avatarImg = document.createElement('img');
-  
+
+    const button = document.createElement('button');
+    const icon = document.createElement('span');
+    const text = document.createElement('span');
+
     // Change appearance
     avatarImg.width = 100;
     avatarImg.height = 100;
@@ -33,21 +37,30 @@ function generatePostHTML(username, date, postText, comments, img) {
     postTextDiv.className = 'posttext';
     postCommentsDiv.className = 'postComments';
     avatarImg.className= 'post_avatar';
-  
+    button.classList.add('fb-like-button');
+    icon.classList.add('fb-like-icon');
+    text.classList.add('fb-like-text');
+
     // Set content
     usernameDateDiv.textContent = `${username} ${date}`;
     postTextDiv.textContent = postText;
     postCommentsDiv.textContent = comments.join('\n');
     avatarImg.src = img;
+    text.textContent = '0';
   
     // Append the child elements
     postHeaderDiv.appendChild(avatarImg);
     postHeaderDiv.appendChild(usernameDateDiv);
     postContentDiv.appendChild(postTextDiv);
+
+    // Add the icon and text elements to the button
+    button.appendChild(icon);
+    button.appendChild(text);
   
     postDiv.appendChild(postHeaderDiv);
     postDiv.appendChild(postContentDiv);
     postDiv.appendChild(postCommentsDiv);
+    postDiv.appendChild(button);
     
     // Return the HTML string
     return postDiv.outerHTML;
