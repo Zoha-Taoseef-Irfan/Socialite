@@ -66,7 +66,6 @@ function createMessageItem() {
           scrollToLatestMessage();   
   });
   
-  
 }
 
 setInterval(getMessageItems,1500);

@@ -22,26 +22,6 @@ function getPosts() {
   });
 }
 
-// function createPost() {
-//   let postTXT = document.getElementById('postText').value;
-//   // TODO image left out for now
-//   // TODO set global username, and use it when posting
-//   let url = '/create/post/';
-//   let data = { username: currentUser, text: postTXT};
-//   let p = fetch(url, {
-//     method: 'POST', 
-//     body: JSON.stringify(data),
-//     headers: {"Content-Type": "application/json"}
-//   });
-//   p.then(() => {
-//     console.log('Post Created');
-//     getPosts();
-//   });
-//   p.catch(() => { 
-//     alert('Something went wrong after creating a post');
-//   });
-// }
-
 $(document).ready(function () {
 
   $("#createPostButton").click(function (event) {
