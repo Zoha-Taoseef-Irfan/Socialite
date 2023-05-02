@@ -294,25 +294,10 @@ app.post('/chats/post', parser.json(),(req, res) => {
   });
 
   function getImgRoute(inputString) {
-    if(path.sep === '\\') {
-      const regex = /uploads\\[\w.-]+/g;
-      const match = inputString.match(regex);
-      if (match) {
-        return match[0];
-      }
-      else {
-        return null;
-      }
-    } else {
-      const pattern = /uploads\/\d+\.\w+$/;
-      const match = inputString.match(pattern);
-      if (match) {
-        return match[0];
-      }
-      else {
-        return null;
-      }
-    }
+    const pattern = /uploads\/\d+\.\w+$/;
+    const match = inputString.match(pattern);
+
+    return match ? match[0] : null;
   }
 
 // Start up the server to listen on port 80

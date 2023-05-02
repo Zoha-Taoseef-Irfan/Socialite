@@ -8,7 +8,7 @@ function getUserName(){
 }
 
 function generatePostHTML(username, date, postText, comments, img, postImg) {
-    console.log("postImg: "+postImg);
+    //console.log("postImg: "+postImg);
   
     // Create the HTML elements
     const postDiv = document.createElement('div');
