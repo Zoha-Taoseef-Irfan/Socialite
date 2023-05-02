@@ -4,10 +4,10 @@ function getPostsForUser() {
     let p = fetch(url);
     let ps = p.then( (response) => {
       return response.json();
-    }).then((objects) => { 
+    }).then((posts) => { 
       let html = '';
-      for (i in objects) {
-        html += generatePostHTML(objects[i].username, objects[i].dateCreated, objects[i].text, objects[i].comments, objects[i].avatar);
+      for (let i = posts.length-1; i >= 0; i--) {
+        html += generatePostHTML(posts[i].username, posts[i].dateCreated, posts[i].text, posts[i].comments, posts[i].avatar,posts[i].image);
     }
       let x = document.getElementById('userPosts');
       if (x){
