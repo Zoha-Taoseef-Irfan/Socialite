@@ -3,8 +3,8 @@
 <head>
   <link rel="stylesheet" type="text/css" href="./style.css">
   <script src="./common.js"></script>
+  <script src="./jquery.js"></script>
   <script src="./code.js"></script>
-  <script src="./chat.js"></script>
   <title>Social</title>
 </head>
 <body>
@@ -14,19 +14,18 @@
   </div>
     
   <form enctype="multipart/form-data" method="post" class="segment" id="createPost">
-    <div>Create Post</div>
-    <br/>
     <div class="form-group">
+      <div>Create Post</div>
+      <br/>
       <label for="postText">Enter post text</label>
-      <input id="postText" type="text"> </input>
+      <input id="postText" name="postText" type="text"> </input>
       <br/>
       <label for="postImageFile" class="postImageLabel"></label>
       <input type="file" id="postImageFile" name="postImage"></input>
       <br/>
-      <input type="button" id="createPostButton" onclick="createPost();" value="Create Post"/>
+      <input type="button" id="createPostButton" value="Create Post"/>
       <input type="button" id="goToMyProfileButton" onclick="myProfile();" value="My Profile"/>
       <input type="button" id="goToMessageButton" onclick="chat();" value="Chat"/>
-      <div id="result"></div>
     </div>
   </form>
 
