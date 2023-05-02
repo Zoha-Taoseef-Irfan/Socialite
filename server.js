@@ -136,39 +136,27 @@ app.post('/create/item/', (req, res) => {
 });
 
 app.post('/create/post/', upload.single("postImage"), (req, res) => {
+  let PostToSave = {username: req.body.username, text: req.body.postText, image: getImgRoute(req.file.path)};
 
-  // need to set 
-  // username: String,
-  // avatar: String,
-  // text: String,
-  // image: String,
-  console.log("req.body: %j", req.body)
-  console.log("req.body.username: "+req.body.username)
-  console.log("req.body.postText: "+req.body.postText)
-  console.log("req.file.path: "+req.file.path)
-
-
-//   let PostToSave = {username: req.body.username, text: req.body.postText, image: req.file.path};
-
-//   //find avatar of user
-//   let p2 = User.find({username:req.body.username}).exec();
-//   p2.then( (results) => { 
-//     PostToSave.avatar = results[0].img;
-//     var newPost = new Post(PostToSave);
-//     newPost.dateCreated = new Date().toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
-//     let p1 = newPost.save();
-//     p1.then( (doc) => { 
-//       res.end('POST SAVED SUCCESFULLY');
-//     });
-//     p1.catch( (err) => { 
-//       console.log(err);
-//       res.end('FAILED TO CREATE A POST');
-//     });
-//   });
-//   p2.catch( (error) => {
-//     console.log("error finding user avatar using username")
-//     cosnole.log(error);
-//   });
+  //find avatar of user
+  let p2 = User.find({username:req.body.username}).exec();
+  p2.then( (results) => { 
+    PostToSave.avatar = results[0].img;
+    var newPost = new Post(PostToSave);
+    newPost.dateCreated = new Date().toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
+    let p1 = newPost.save();
+    p1.then( (doc) => { 
+      res.end('POST SAVED SUCCESFULLY');
+    });
+    p1.catch( (err) => { 
+      console.log(err);
+      res.end('FAILED TO CREATE A POST');
+    });
+  });
+  p2.catch( (error) => {
+    console.log("error finding user avatar using username")
+    cosnole.log(error);
+  });
 });
 
 app.get('/posts/', (req, res) => {

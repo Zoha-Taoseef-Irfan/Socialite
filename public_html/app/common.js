@@ -7,14 +7,14 @@ function getUserName(){
   return currentUser;
 }
 
-function generatePostHTML(username, date, postText, comments, img) {
-    console.log(currentUser);
-    console.log("username for generating html: "+username)
+function generatePostHTML(username, date, postText, comments, img, postImg) {
+    console.log("postImg: "+postImg);
   
     // Create the HTML elements
     const postDiv = document.createElement('div');
     const postHeaderDiv = document.createElement('div');
     const postContentDiv = document.createElement('div');
+    const postImageImg = document.createElement('img');
     const postCommentsDiv = document.createElement('div');
   
     const usernameDateDiv = document.createElement('div');
@@ -28,6 +28,8 @@ function generatePostHTML(username, date, postText, comments, img) {
     // Change appearance
     avatarImg.width = 100;
     avatarImg.height = 100;
+    postImageImg.width = 200;
+    postImageImg.height = 200;
   
     // Set the class names
     postDiv.className = 'post';
@@ -35,6 +37,7 @@ function generatePostHTML(username, date, postText, comments, img) {
     postContentDiv.className= 'postContent';
     usernameDateDiv.className = 'username_date';
     postTextDiv.className = 'posttext';
+    postImageImg.className = 'postImageImg';
     postCommentsDiv.className = 'postComments';
     avatarImg.className= 'post_avatar';
     button.classList.add('fb-like-button');
@@ -43,6 +46,7 @@ function generatePostHTML(username, date, postText, comments, img) {
 
     // Set content
     usernameDateDiv.textContent = `${username} ${date}`;
+    postImageImg.src= postImg;
     postTextDiv.textContent = postText;
     postCommentsDiv.textContent = comments.join('\n');
     avatarImg.src = img;
@@ -52,6 +56,7 @@ function generatePostHTML(username, date, postText, comments, img) {
     postHeaderDiv.appendChild(avatarImg);
     postHeaderDiv.appendChild(usernameDateDiv);
     postContentDiv.appendChild(postTextDiv);
+    postContentDiv.appendChild(postImageImg);
 
     // Add the icon and text elements to the button
     button.appendChild(icon);

@@ -7,8 +7,8 @@ function getPosts() {
     return response.json();
   }).then((posts) => { 
     let html = '';
-    for (i in posts) {
-      html += generatePostHTML(posts[i].username, posts[i].dateCreated, posts[i].text, posts[i].comments, posts[i].avatar);
+    for (let i = posts.length-1; i >= 0; i--) {
+      html += generatePostHTML(posts[i].username, posts[i].dateCreated, posts[i].text, posts[i].comments, posts[i].avatar, posts[i].image);
       // TODO add button for like, and comment functionality here
     }
     let x = document.getElementById('posts');
@@ -89,4 +89,4 @@ $(document).ready(function () {
 
 });
 
-// setInterval(getPosts, 1000);
+setInterval(getPosts, 5000);
