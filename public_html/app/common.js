@@ -16,15 +16,11 @@ function generatePostHTML(username, date, postText, comments, img, postImg, post
     const postContentDiv = document.createElement('div');
     const postImageImg = document.createElement('img');
     const postCommentsDiv = document.createElement('div');
-    const icon_text_Div = document.createElement('div');
-    // postCommentsInput
     const usernameDateDiv = document.createElement('div');
     const postTextDiv = document.createElement('div');
     const avatarImg = document.createElement('img');
 
     const likeButton = document.createElement('button');
-    const icon = document.createElement('span');
-    const text = document.createElement('span');
 
     // Change appearance
     avatarImg.width = 100;
@@ -40,12 +36,9 @@ function generatePostHTML(username, date, postText, comments, img, postImg, post
     postTextDiv.className = 'posttext';
     postImageImg.className = 'postImageImg';
     postCommentsDiv.className = 'postComments';
-    icon_text_Div.className = 'icon_text_div';
     
     avatarImg.className= 'post_avatar';
     likeButton.classList.add('fb-like-button');
-    icon.classList.add('fb-like-icon');
-    text.classList.add('fb-like-text');
 
     // Set content
     usernameDateDiv.textContent = `${username} ${date}`;
@@ -61,7 +54,6 @@ function generatePostHTML(username, date, postText, comments, img, postImg, post
     }
 
     avatarImg.src = img;
-    text.textContent = '0';
 
     // Append the child elements
     postHeaderDiv.appendChild(avatarImg);
@@ -69,12 +61,8 @@ function generatePostHTML(username, date, postText, comments, img, postImg, post
     postContentDiv.appendChild(postTextDiv);
     postContentDiv.appendChild(postImageImg);
 
-    icon_text_Div.appendChild(icon);
-    icon_text_Div.appendChild(text);
-
     console.log("postid= "+postId)
 
-    // '<button id='+ item._id +' onclick="clickBuy(\''+item._id+'\')">Buy</button>';
     let functioncall = "postComment('"+ getUserName()+"','"+postId+"');";
 
     postCommentsDiv.innerHTML += "<label for='"+postId+"'>Make a comment</label>"
@@ -85,7 +73,6 @@ function generatePostHTML(username, date, postText, comments, img, postImg, post
     postDiv.appendChild(postContentDiv);
     postDiv.appendChild(postCommentsDiv);
     postDiv.appendChild(likeButton);
-    postDiv.appendChild(icon_text_Div);
     
     // Return the HTML string
     return postDiv.outerHTML;
