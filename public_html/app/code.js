@@ -9,6 +9,7 @@ function getPosts() {
     let html = '';
     for (let i = posts.length-1; i >= 0; i--) {
       let curPost = posts[i];
+      console.log(curPost.likedUsers)
       html += generatePostHTML(curPost.username, curPost.dateCreated, curPost.text, curPost.comments, curPost.avatar, curPost.image, curPost._id, curPost.likeCount, curPost.likedUsers);
       // TODO add button for like, and comment functionality here
     }

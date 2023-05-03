@@ -9,7 +9,6 @@ function getUserName(){
 
 function generatePostHTML(username, date, postText, comments, img, postImg, postId, likeCount, likedUsers) {
     //console.log("postImg: "+postImg);
-    console.log("likedUsers for post: "+postId+" : "+likedUsers)
   
     // Create the HTML elements
     const postDiv = document.createElement('div');
@@ -65,16 +64,26 @@ function generatePostHTML(username, date, postText, comments, img, postImg, post
 
     postCommentsDiv.innerHTML += "<label for='"+postId+"'>Make a comment</label>"
     postCommentsDiv.innerHTML += "<input type=text class=postCommentsInput id='"+postId+"'/>"
-    let likeButton = "<button class=commentBtn onclick="+functioncallComment+">Comment</button>"; 
-    postCommentsDiv.insertAdjacentHTML('beforeend',likeButton);
+    let commentButtonHTML = "<button class=commentBtn onclick="+functioncallComment+">Comment</button>"; 
+    postCommentsDiv.insertAdjacentHTML('beforeend',commentButtonHTML);
     
-    // const likeButton = document.createElement('button');
-    // likeButton.classList.add('fb-like-button');
-    // postDiv.appendChild(likeButton);
+    // creating like button
+    console.log("liked users in target place: "+ likedUsers)
+    // check if cur user in likedUsers list
+    let likeBtnStyle = '';
+    if(likedUsers.includes(getUserName())) {
+      let likeafter = "icons/likeafter.jpg"
+      likeBtnStyle += "style=background-image:url("+likeafter+");"
+    } else {
+      let likebefore = "icons/likebefore.png"
+      likeBtnStyle += "style=background-image:url("+likebefore+");"
+    }
     let likeid = postId+'_like'
     let functioncallLike = "likePost('"+ getUserName()+"','"+likeid+"');";
-    console.log("likecount: "+likeCount)
-    postCommentsDiv.innerHTML += "<button id="+"'"+likeid+"'"+"class=fb-like-button onclick="+functioncallLike+">"+likeCount+"</button>"; 
+    let likeBtnHTML = "<button "+likeBtnStyle+" id="+"'"+likeid+"'"+"class=fb-like-button onclick="+functioncallLike+">"+likeCount+"</button>"; 
+    postCommentsDiv.insertAdjacentHTML('beforeend',likeBtnHTML);
+
+
 
     postDiv.appendChild(postHeaderDiv);
     postDiv.appendChild(postContentDiv);
@@ -107,7 +116,7 @@ function generatePostHTML(username, date, postText, comments, img, postImg, post
       console.log(responseStr);
     })
 
-    let likeimg='https://w7.pngwing.com/pngs/377/493/png-transparent-social-media-facebook-like-button-facebook-like-button-youtube-social-media-company-rectangle-thumb-signal.png'
+    let likeimg='icons/likeafter.jpg'
     $('#'+likeid).css('background-image', 'url(' + likeimg + ')');
     
   } 

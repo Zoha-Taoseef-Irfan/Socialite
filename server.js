@@ -171,17 +171,34 @@ app.get('/like/post/:postid/:username', (req, res) => {
   p1.then( (results) => { 
     if (results.length == 1) {
       let oldPost = results[0];
-      oldPost.likedUsers.push(uname);
-      oldPost.likeCount += 1;
-      let newPost = new Post(oldPost);
-      let p2 = newPost.save();
-      p2.then(result => {
-        res.end('Liked successfully');
-      })
-      p2.catch(err=> {
-        console.log('Error saving when liking on post')
-        res.end('failed save on like post')
-      })
+      if(!oldPost.likedUsers.includes(uname)) {
+        oldPost.likedUsers.push(uname);
+        oldPost.likeCount += 1;
+        let newPost = new Post(oldPost);
+        let p2 = newPost.save();
+        p2.then(result => {
+          res.end('Liked successfully');
+        })
+        p2.catch(err=> {
+          console.log('Error saving when liking on post')
+          res.end('failed save on like post')
+        })
+        console.log('Liked post!');
+      } 
+      else {
+        oldPost.likedUsers.remove(uname);
+        oldPost.likeCount -= 1;
+        let newPost = new Post(oldPost);
+        let p2 = newPost.save();
+        p2.then(result => {
+          res.end('Liked successfully');
+        })
+        p2.catch(err=> {
+          console.log('Error saving when liking on post')
+          res.end('failed save on like post')
+        })
+        console.log('Unliked post!');
+      }
     } else {
       res.end('Could not find post to like on');
     }
