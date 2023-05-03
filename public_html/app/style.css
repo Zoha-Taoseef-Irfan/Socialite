@@ -137,14 +137,25 @@ body {
   margin-top: 10px;
 }
 
-.postComments {
-  border-top: 1px solid #e9ebee;
-  margin-top: 16px;
-  padding-top: 8px;
-}
 
 .comment {
-  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.commentName {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.commentText {
+  background-color: #f0f2f5;
+  padding: 10px;
+  border-radius: 16px;
+  font-size: 14px;
+  line-height: 20px;
+  max-width: 500px;
 }
 
 .postCommentsInput {

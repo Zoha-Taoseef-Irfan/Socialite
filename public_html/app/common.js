@@ -45,8 +45,16 @@ function generatePostHTML(username, date, postText, comments, img, postImg, post
     // postCommentsDiv.textContent = comments.join('\n');
     for(let i=0; i<comments.length; i++){
       var commentDiv = document.createElement('div');
+      var postCommentNameDiv = document.createElement('div');
+      var postCommentCommentDiv = document.createElement('div');
+      var comment = comments[i].split('\n\n');
+      postCommentNameDiv.className = 'commentName';
+      postCommentCommentDiv.className = 'commentText';
       commentDiv.className = 'comment';
-      commentDiv.textContent = comments[i];
+      postCommentNameDiv.textContent = comment[0];
+      postCommentCommentDiv.textContent = comment[1];
+      commentDiv.appendChild(postCommentNameDiv);
+      commentDiv.appendChild(postCommentCommentDiv);
       postCommentsDiv.appendChild(commentDiv);
     }
     avatarImg.src = img;
