@@ -256,7 +256,7 @@ body {
   font-weight: bold;
 }
 
-.add-friend-button {
+.follow-button {
   background-color: #1877f2;
   border: none;
   border-radius: 9999px;
@@ -266,7 +266,7 @@ body {
   padding: 6px 16px;
 }
 
-.added-friend-button {
+.following-button {
   background-color: #8BC34A;
   border: none;
   border-radius: 9999px;

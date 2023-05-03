@@ -38,7 +38,7 @@ mongoose.connection.on('error', () => {
   hash: String,
   email:String,
   city:String,
-  friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   //friends: [Number], //mongodb ids of this users friend
   img: String
 });
@@ -333,7 +333,38 @@ app.post('/chats/post', parser.json(),(req, res) => {
   });
 
   // Create friendship between two users
-  app.post('/addFriend', async function(req, res) {
+  app.post('/followUser', async function(req, res) {
+    const userID = req.body.user;
+    const friendID = req.body.friend;
+  
+    try {
+      // Find User objects for current user and user to be followed
+      const user = await User.findOne({ username: userID }).exec();
+      const friend = await User.findOne({ username: friendID }).exec();
+  
+      if (!user || !friend) {
+        throw new Error('Invalid user or friend ID');
+      }
+  
+      const isFollowing = user.following.includes(friend._id);
+      if (isFollowing === false) {
+        // Add friend ID to user's following list
+        user.following.push(friend._id);
+    
+        // Save changes to database
+        await user.save();
+    
+        console.log(`${user.username} is now following ${friend.username} on Socialite.`);
+        res.status(200).send('Friend added!');
+      }
+      
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Error following user');
+    }
+  });
+
+  app.post('/isFollowing', async function(req, res) {
     const userID = req.body.user;
     const friendID = req.body.friend;
   
@@ -346,50 +377,16 @@ app.post('/chats/post', parser.json(),(req, res) => {
         throw new Error('Invalid user or friend ID');
       }
   
-      const isFriend = user.friends.includes(friend._id);
-      if (isFriend === false) {
-        // Add friend IDs to each other's friend lists
-        user.friends.push(friend._id);
-        friend.friends.push(user._id);
-    
-        // Save changes to database
-        await user.save();
-        await friend.save();
-    
-        console.log(`${user.username} and ${friend.username} are now friends on Socialite.`);
-        res.status(200).send('Friend added!');
-      }
+      const isFollowing = user.following.includes(friend._id);
+
+      res.status(200).json({ isFollowing });
       
     } catch (err) {
       console.error(err);
-      res.status(500).send('Error adding friend');
-    }
-  });
-
-  app.post('/isFriend', async function(req, res) {
-    const userID = req.body.user;
-    const friendID = req.body.friend;
-  
-    try {
-      // Find User objects for current user and friend to be checked
-      const user = await User.findOne({ username: userID }).exec();
-      const friend = await User.findOne({ username: friendID }).exec();
-  
-      if (!user || !friend) {
-        throw new Error('Invalid user or friend ID');
-      }
-  
-      // Check if the friend ID is in the current user's friend list
-      const isFriend = user.friends.includes(friend._id);
-  
-      res.status(200).json({ isFriend });
-    } catch (err) {
-      console.error(err);
-      res.status(500).send('Error checking friend status');
+      res.status(500).send(`Error showing following status to ${friendID.username}`);
     }
   });
         
-
   // ***CLEAR EXISTING DATABASE***
   // async function deleteAllData() {
   //   try {
