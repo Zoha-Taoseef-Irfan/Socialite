@@ -37,7 +37,7 @@ mongoose.connection.on('error', () => {
   salt: Number,
   hash: String,
   email:String,
-  city:String,
+  bio:String,
   //friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   friends: [Number], //mongodb ids of this users friend
   img: String
@@ -184,11 +184,11 @@ app.get('/posts/:user', (req, res) => {
 });
 
 app.get('/profile/:user', (req, res) => {
-  console.log("this is the req . param . user----" + req.params.user);
+  //console.log("this is the req . param . user----" + req.params.user);
   let p1 = User.find({username:req.params.user}).exec();
 
   p1.then( (results) => { 
-    console.log(results[0].username);
+    //console.log(results[0].username);
     res.end( JSON.stringify(results) );
     
   });
@@ -213,15 +213,15 @@ app.post('/account/create/', upload.single("avatar"), (req, res) => {
       var hash = crypto.createHash('sha3-256');
       let data = hash.update(toHash, 'utf-8');
       let newHash = data.digest('hex');
-      let email = req.body.email;
-      let city = req.body.city;
+      let email = req.body.emailCreate;
+      let bio = req.body.bioCreate;
 
       var newUser = new User({ 
         username: req.body.usernameCreate,
         salt: newSalt,
         hash: newHash,
         email:email,
-        city:city,
+        bio:bio,
         img: getImgRoute(req.file.path)
       });
       newUser.save().then( (doc) => { 

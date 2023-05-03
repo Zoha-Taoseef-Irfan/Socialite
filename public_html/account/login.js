@@ -23,6 +23,7 @@ $(document).ready(function () {
 
   // Create a FormData object 
       var data = new FormData(form);
+      console.log(form);
 
   // For an extra field for the FormData
       data.append("CustomField", "This is some extra data, testing");
