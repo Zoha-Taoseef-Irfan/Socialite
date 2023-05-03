@@ -61,7 +61,7 @@ var Post = mongoose.model('Post', PostSchema);
 
 var messageSchema = new mongoose.Schema({
   alias: String,    
-  message: String,
+  message: String
 });
 var Item = mongoose.model('Item',messageSchema);
 
@@ -184,6 +184,26 @@ app.get('/posts/:user', (req, res) => {
   p1.catch( (error) => {
     console.log(error);
     res.end('FAIL');
+  });
+});
+
+app.post('/create/post/', upload.single("postImage"), (req, res) => {
+  let PostToSave = {username: req.body.username, text: req.body.postText, image: getImgRoute(req.file.path)};
+
+  //find avatar of user
+  let p2 = User.find({username:req.body.username}).exec();
+  p2.then( (results) => { 
+    PostToSave.avatar = results[0].img;
+    var newPost = new Post(PostToSave);
+    newPost.dateCreated = new Date().toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
+    let p1 = newPost.save();
+    p1.then( (doc) => { 
+      res.end('POST SAVED SUCCESFULLY');
+    });
+    p1.catch( (err) => { 
+      console.log(err);
+      res.end('FAILED TO CREATE A POST');
+    });
   });
 });
 

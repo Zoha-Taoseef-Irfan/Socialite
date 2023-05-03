@@ -40,6 +40,7 @@ function generatePostHTML(username, date, postText, comments, img, postImg, post
     postTextDiv.className = 'posttext';
     postImageImg.className = 'postImageImg';
     postCommentsDiv.className = 'postComments';
+    icon_text_Div.className = 'icon_text_div';
     
     avatarImg.className= 'post_avatar';
     likeButton.classList.add('fb-like-button');
@@ -58,7 +59,6 @@ function generatePostHTML(username, date, postText, comments, img, postImg, post
       commentDiv.textContent = comments[i];
       postCommentsDiv.appendChild(commentDiv);
     }
-
 
     avatarImg.src = img;
     text.textContent = '0';

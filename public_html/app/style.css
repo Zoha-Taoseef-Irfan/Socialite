@@ -177,6 +177,36 @@ body {
   height: 40px
 }
 
+.icon_text_div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #3b5998;
+  border-radius: 5px;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.fb-like-icon {
+  background-image: url('like.png');
+  background-repeat: no-repeat;
+  background-position: -1px -1px;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.fb-like-text {
+  display: block;
+  margin-left: 5px;
+}
+
 /* Like "button" */
 
 .fb-like-button {
