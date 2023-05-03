@@ -183,6 +183,21 @@ app.get('/posts/:user', (req, res) => {
   });
 });
 
+app.get('/profile/:user', (req, res) => {
+  console.log("this is the req . param . user----" + req.params.user);
+  let p1 = User.find({username:req.params.user}).exec();
+
+  p1.then( (results) => { 
+    console.log(results[0].username);
+    res.end( JSON.stringify(results) );
+    
+  });
+  p1.catch( (error) => {
+    console.log("error while finding profile metadata");
+    res.end('FAIL');
+  });
+});
+
 /**
  * This route is for creating a new user account.
  */
@@ -294,7 +309,13 @@ app.post('/chats/post', parser.json(),(req, res) => {
   });
 
   function getImgRoute(inputString) {
-    if(path.sep === '\\') {
+    if(inputString.includes('/')) {
+      const pattern = /uploads\/\d+\.\w+$/;
+      const match = inputString.match(pattern);
+  
+      return match ? match[0] : null;
+    }
+    else {
       const regex = /uploads\\[\w.-]+/g;
       const match = inputString.match(regex);
       if (match) {
@@ -303,17 +324,9 @@ app.post('/chats/post', parser.json(),(req, res) => {
       else {
         return null;
       }
-    } else {
-      const pattern = /uploads\/\d+\.\w+$/;
-      const match = inputString.match(pattern);
-      if (match) {
-        return match[0];
-      }
-      else {
-        return null;
-      }
     }
-  }
+      
+   }
 
 // Start up the server to listen on port 80
 const port = 3000;
