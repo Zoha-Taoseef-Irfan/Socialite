@@ -46,7 +46,7 @@ function exploreFriends() {
       .then((users) => {
         let html = '';
         for (let i = 0; i < users.length; i++) {
-          html += generateUsersHTML(users[i].username, users[i].img);
+          html += generateUsersHTML(users[i].username, users[i].img, currentUser);
         }
         let parentContainer = document.createElement('div');
         parentContainer.setAttribute('id', 'friends-container');
@@ -64,7 +64,10 @@ function exploreFriends() {
 }
 
 // Generate divs for each user, including their name picture and add friend button
-function generateUsersHTML(username, profilePicture) {
+function generateUsersHTML(username, profilePicture, currentUser) {
+    if (username === currentUser) {
+        return '';
+    }
     // Create the HTML elements
     const userDiv = document.createElement('div');
     const usernameDiv = document.createElement('div');
