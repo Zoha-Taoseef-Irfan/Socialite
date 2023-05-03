@@ -14,6 +14,10 @@ function myProfile(){
 function chat(){
     window.location.href = '/app/chat.html';
 }
+
+function exploreFriends(){
+  window.location.href = '/app/exploreFriends.html';
+}
 function scrollToLatestMessage() {
   const messagesContainer = document.getElementById('messages');
   messagesContainer.scrollTop = messagesContainer.scrollHeight;
