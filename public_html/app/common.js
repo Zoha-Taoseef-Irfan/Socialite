@@ -49,7 +49,6 @@ function generatePostHTML(username, date, postText, comments, img, postImg, post
       commentDiv.textContent = comments[i];
       postCommentsDiv.appendChild(commentDiv);
     }
-
     avatarImg.src = img;
 
     // Append the child elements
@@ -82,8 +81,6 @@ function generatePostHTML(username, date, postText, comments, img, postImg, post
     let functioncallLike = "likePost('"+ getUserName()+"','"+likeid+"');";
     let likeBtnHTML = "<button "+likeBtnStyle+" id="+"'"+likeid+"'"+"class=fb-like-button onclick="+functioncallLike+">"+likeCount+"</button>"; 
     postCommentsDiv.insertAdjacentHTML('beforeend',likeBtnHTML);
-
-
 
     postDiv.appendChild(postHeaderDiv);
     postDiv.appendChild(postContentDiv);
