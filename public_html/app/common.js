@@ -7,8 +7,9 @@ function getUserName(){
   return currentUser;
 }
 
-function generatePostHTML(username, date, postText, comments, img, postImg, postId) {
+function generatePostHTML(username, date, postText, comments, img, postImg, postId, likeCount, likedUsers) {
     //console.log("postImg: "+postImg);
+    console.log("likedUsers for post: "+postId+" : "+likedUsers)
   
     // Create the HTML elements
     const postDiv = document.createElement('div');
@@ -19,8 +20,6 @@ function generatePostHTML(username, date, postText, comments, img, postImg, post
     const usernameDateDiv = document.createElement('div');
     const postTextDiv = document.createElement('div');
     const avatarImg = document.createElement('img');
-
-    const likeButton = document.createElement('button');
 
     // Change appearance
     avatarImg.width = 100;
@@ -38,7 +37,6 @@ function generatePostHTML(username, date, postText, comments, img, postImg, post
     postCommentsDiv.className = 'postComments';
     
     avatarImg.className= 'post_avatar';
-    likeButton.classList.add('fb-like-button');
 
     // Set content
     usernameDateDiv.textContent = `${username} ${date}`;
@@ -63,16 +61,24 @@ function generatePostHTML(username, date, postText, comments, img, postImg, post
 
     console.log("postid= "+postId)
 
-    let functioncall = "postComment('"+ getUserName()+"','"+postId+"');";
+    let functioncallComment = "postComment('"+ getUserName()+"','"+postId+"');";
 
     postCommentsDiv.innerHTML += "<label for='"+postId+"'>Make a comment</label>"
     postCommentsDiv.innerHTML += "<input type=text class=postCommentsInput id='"+postId+"'/>"
-    postCommentsDiv.innerHTML += "<button class=commentBtn onclick="+functioncall+">Comment</button>"; 
+    let likeButton = "<button class=commentBtn onclick="+functioncallComment+">Comment</button>"; 
+    postCommentsDiv.insertAdjacentHTML('beforeend',likeButton);
+    
+    // const likeButton = document.createElement('button');
+    // likeButton.classList.add('fb-like-button');
+    // postDiv.appendChild(likeButton);
+    let likeid = postId+'_like'
+    let functioncallLike = "likePost('"+ getUserName()+"','"+likeid+"');";
+    console.log("likecount: "+likeCount)
+    postCommentsDiv.innerHTML += "<button id="+"'"+likeid+"'"+"class=fb-like-button onclick="+functioncallLike+">"+likeCount+"</button>"; 
 
     postDiv.appendChild(postHeaderDiv);
     postDiv.appendChild(postContentDiv);
     postDiv.appendChild(postCommentsDiv);
-    postDiv.appendChild(likeButton);
     
     // Return the HTML string
     return postDiv.outerHTML;
@@ -87,4 +93,21 @@ function generatePostHTML(username, date, postText, comments, img, postImg, post
     p.then(responseStr=> {
       console.log(responseStr);
     })
+  } 
+
+  function likePost(username, likeid) {
+    let postid = likeid.split('_')[0];
+    console.log(username)
+    console.log(postid)
+    console.log(likeid)
+
+    let url = '/like/post/'+postid+'/'+username;
+    let p = fetch(url);
+    p.then(responseStr=> {
+      console.log(responseStr);
+    })
+
+    let likeimg='https://w7.pngwing.com/pngs/377/493/png-transparent-social-media-facebook-like-button-facebook-like-button-youtube-social-media-company-rectangle-thumb-signal.png'
+    $('#'+likeid).css('background-image', 'url(' + likeimg + ')');
+    
   } 

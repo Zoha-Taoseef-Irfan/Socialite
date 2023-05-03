@@ -54,7 +54,8 @@ var PostSchema = new mongoose.Schema( {
   //time: String, // maybe we should avoid this and just have the data functionality if date obj can somehow give us the time
   dateCreated: String,
   comments: [String],
-  likes: { type: Number, default: 0 }
+  likeCount: { type: Number, default: 0 },
+  likedUsers: [String]
 });
 
 var Post = mongoose.model('Post', PostSchema);
@@ -160,6 +161,34 @@ app.get('/create/comment/:postid/:username/:comment', (req, res) => {
   p1.catch( (error) => {
     console.log('finding posts when commenting failed');
     res.end('finding posts when commenting failed');
+  });
+});
+
+app.get('/like/post/:postid/:username', (req, res) => {
+  let pid = req.params.postid;
+  let uname = req.params.username;
+  let p1 = Post.find({_id:pid}).exec();
+  p1.then( (results) => { 
+    if (results.length == 1) {
+      let oldPost = results[0];
+      oldPost.likedUsers.push(uname);
+      oldPost.likeCount += 1;
+      let newPost = new Post(oldPost);
+      let p2 = newPost.save();
+      p2.then(result => {
+        res.end('Liked successfully');
+      })
+      p2.catch(err=> {
+        console.log('Error saving when liking on post')
+        res.end('failed save on like post')
+      })
+    } else {
+      res.end('Could not find post to like on');
+    }
+  });
+  p1.catch( (error) => {
+    console.log('finding posts when liking failed');
+    res.end('finding posts when liking failed');
   });
 });
 
@@ -353,6 +382,7 @@ app.get('/chats', (req, res) => {
     res.end("fail");
   });
 });
+
 app.post('/chats/post', parser.json(),(req, res) => {
     console.log(req.body);
     let n = req.body.alias;
