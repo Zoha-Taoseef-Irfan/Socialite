@@ -7,6 +7,7 @@ function getUserName(){
   return currentUser;
 }
 
+
 function generatePostHTML(username, date, postText, comments, img, postImg) {
     //console.log("postImg: "+postImg);
   

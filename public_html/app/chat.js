@@ -69,6 +69,4 @@ function scrollToLatestMessage() {
    
   }
   
-
-
   setInterval(getMessageItems,1500);
