@@ -62,8 +62,9 @@ function getPostsForUser() {
     }).then((posts) => { 
       let html = '';
       for (let i = posts.length-1; i >= 0; i--) {
-        html += generatePostHTML(posts[i].username, posts[i].dateCreated, posts[i].text, posts[i].comments, posts[i].avatar,posts[i].image);
-    }
+        let curPost = posts[i];
+        html += generatePostHTML(curPost.username, curPost.dateCreated, curPost.text, curPost.comments, curPost.avatar, curPost.image, curPost._id, curPost.likeCount, curPost.likedUsers);
+      }
       let x = document.getElementById('userPosts');
       if (x){
         x.innerHTML = html;
