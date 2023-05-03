@@ -71,3 +71,4 @@ function generatePostHTML(username, date, postText, comments, img, postImg) {
     return postDiv.outerHTML;
   }
   
+  

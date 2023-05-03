@@ -38,8 +38,8 @@ mongoose.connection.on('error', () => {
   hash: String,
   email:String,
   city:String,
-  //friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-  friends: [Number], //mongodb ids of this users friend
+  friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  //friends: [Number], //mongodb ids of this users friend
   img: String
 });
 
@@ -315,7 +315,72 @@ app.post('/chats/post', parser.json(),(req, res) => {
     }
   }
 
+
+  // Return all users currently registered on Socialite
+  app.get('/users', (req, res) => {
+    let p1 = User.find({}).exec();
+    p1.then((results) => {
+      const users = results.map((user) => ({
+        username: user.username,
+        img: user.img,
+      }));
+      res.json(users);
+    });
+    p1.catch((error) => {
+      console.log(error);
+      res.status(500).send('Error retrieving users.');
+    });
+  });
+
+  // Create friendship between two users
+  app.post('/addFriend', async function(req, res) {
+    const userID = req.body.user;
+    const friendID = req.body.friend;
+  
+    try {
+      // Find User objects for current user and friend to be added
+      const user = await User.findOne({ username: userID }).exec();
+      const friend = await User.findOne({ username: friendID }).exec();
+  
+      if (!user || !friend) {
+        throw new Error('Invalid user or friend ID');
+      }
+  
+      // Add friend IDs to each other's friend lists
+      user.friends.push(friend._id);
+      friend.friends.push(user._id);
+  
+      // Save changes to database
+      await user.save();
+      await friend.save();
+  
+      console.log(`Friends connection added between ${user.username} and ${friend.username}`);
+      res.status(200).send('Friend added!');
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Error adding friend');
+    }
+  });
+  
+  
+       
+
+  // ***CLEAR EXISTING DATABASE***
+  // async function deleteAllData() {
+  //   try {
+  //     await Post.deleteMany({});
+  //     await User.deleteMany({});
+  //     console.log('All data deleted successfully.');
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }
+  
+  // deleteAllData();
+
+
+  
+  
 // Start up the server to listen on port 80
 const port = 3000;
 app.listen(port, () => { console.log('server has started'); });
-
