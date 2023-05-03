@@ -135,27 +135,31 @@ app.post('/create/item/', (req, res) => {
   });
 });
 
-app.post('/create/post/', upload.single("postImage"), (req, res) => {
-  let PostToSave = {username: req.body.username, text: req.body.postText, image: getImgRoute(req.file.path)};
-
-  //find avatar of user
-  let p2 = User.find({username:req.body.username}).exec();
-  p2.then( (results) => { 
-    PostToSave.avatar = results[0].img;
-    var newPost = new Post(PostToSave);
-    newPost.dateCreated = new Date().toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
-    let p1 = newPost.save();
-    p1.then( (doc) => { 
-      res.end('POST SAVED SUCCESFULLY');
-    });
-    p1.catch( (err) => { 
-      console.log(err);
-      res.end('FAILED TO CREATE A POST');
-    });
+app.get('/create/comment/:postid/:username/:comment', (req, res) => {
+  let pid = req.params.postid;
+  let uname = req.params.username;
+  let comment = req.params.comment;
+  let p1 = Post.find({_id:pid}).exec();
+  p1.then( (results) => { 
+    if (results.length == 1) {
+      let oldPost = results[0];
+      oldPost.comments.push(uname +'\n\n'+comment);
+      let newPost = new Post(oldPost);
+      let p2 = newPost.save();
+      p2.then(result => {
+        res.end('Commented successfully');
+      })
+      p2.catch(err=> {
+        console.log('Error saving when commenting on post')
+        res.end('failed save on comment post')
+      })
+    } else {
+      res.end('Could not find post to comment on');
+    }
   });
-  p2.catch( (error) => {
-    console.log("error finding user avatar using username")
-    cosnole.log(error);
+  p1.catch( (error) => {
+    console.log('finding posts when commenting failed');
+    res.end('finding posts when commenting failed');
   });
 });
 
@@ -197,6 +201,46 @@ app.get('/profile/:user', (req, res) => {
     res.end('FAIL');
   });
 });
+
+/**
+ * This route is for creating a new user account.
+ */
+app.get('/create/comment/:postid', (req, res) => {
+  let p1 = Post.find({_id: req.body.postid}).exec();
+  p1.then( (results) => { 
+    if (results.length > 0) {
+      res.end('That username is already taken.');
+    } else {
+
+      let newSalt = Math.floor((Math.random() * 1000000));
+      let toHash = req.body.passwordCreate + newSalt;
+      var hash = crypto.createHash('sha3-256');
+      let data = hash.update(toHash, 'utf-8');
+      let newHash = data.digest('hex');
+      let email = req.body.emailCreate;
+      let bio = req.body.bioCreate;
+
+      var newUser = new User({ 
+        username: req.body.usernameCreate,
+        salt: newSalt,
+        hash: newHash,
+        email:email,
+        bio:bio,
+        img: getImgRoute(req.file.path)
+      });
+      newUser.save().then( (doc) => { 
+          res.end("A new account has been created!")
+        }).catch( (err) => { 
+          console.log(err);
+          res.end('Failed to create new account.');
+        });
+    }
+  });
+  p1.catch( (error) => {
+    res.end('Failed to create new account.');
+  });
+});
+
 
 /**
  * This route is for creating a new user account.
