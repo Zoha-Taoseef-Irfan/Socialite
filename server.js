@@ -346,24 +346,49 @@ app.post('/chats/post', parser.json(),(req, res) => {
         throw new Error('Invalid user or friend ID');
       }
   
-      // Add friend IDs to each other's friend lists
-      user.friends.push(friend._id);
-      friend.friends.push(user._id);
-  
-      // Save changes to database
-      await user.save();
-      await friend.save();
-  
-      console.log(`Friends connection added between ${user.username} and ${friend.username}`);
-      res.status(200).send('Friend added!');
+      const isFriend = user.friends.includes(friend._id);
+      if (isFriend === false) {
+        // Add friend IDs to each other's friend lists
+        user.friends.push(friend._id);
+        friend.friends.push(user._id);
+    
+        // Save changes to database
+        await user.save();
+        await friend.save();
+    
+        console.log(`${user.username} and ${friend.username} are now friends on Socialite.`);
+        res.status(200).send('Friend added!');
+      }
+      
     } catch (err) {
       console.error(err);
       res.status(500).send('Error adding friend');
     }
   });
+
+  app.post('/isFriend', async function(req, res) {
+    const userID = req.body.user;
+    const friendID = req.body.friend;
   
+    try {
+      // Find User objects for current user and friend to be checked
+      const user = await User.findOne({ username: userID }).exec();
+      const friend = await User.findOne({ username: friendID }).exec();
   
-       
+      if (!user || !friend) {
+        throw new Error('Invalid user or friend ID');
+      }
+  
+      // Check if the friend ID is in the current user's friend list
+      const isFriend = user.friends.includes(friend._id);
+  
+      res.status(200).json({ isFriend });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Error checking friend status');
+    }
+  });
+        
 
   // ***CLEAR EXISTING DATABASE***
   // async function deleteAllData() {
@@ -378,9 +403,6 @@ app.post('/chats/post', parser.json(),(req, res) => {
   
   // deleteAllData();
 
-
-  
-  
 // Start up the server to listen on port 80
 const port = 3000;
 app.listen(port, () => { console.log('server has started'); });

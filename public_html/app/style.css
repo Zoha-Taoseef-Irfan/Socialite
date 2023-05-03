@@ -265,3 +265,13 @@ body {
   margin-top: 10px;
   padding: 6px 16px;
 }
+
+.added-friend-button {
+  background-color: #8BC34A;
+  border: none;
+  border-radius: 9999px;
+  color: #fff;
+  font-weight: bold;
+  margin-top: 10px;
+  padding: 6px 16px;
+}

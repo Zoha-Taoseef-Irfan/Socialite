@@ -11,7 +11,6 @@ function getUserName() {
 function addFriend(addButton) {
     const userID = getUserName();
     const friendID = addButton.getAttribute('friendID');
-    console.log(userID + " is trying to add " +  friendID + " as a friend.");
 
     const url = `http://localhost:3000/addFriend`;
     const params = {
@@ -35,7 +34,35 @@ function addFriend(addButton) {
   
 
 // Output all users on Socialite onto the page
-function exploreFriends() {
+// function exploreFriends() {
+//     console.log("exploreFriends function called");
+//     let url = '/users/';
+//     let p = fetch(url);
+//     let ps = p
+//       .then((response) => {
+//         return response.json();
+//       })
+//       .then((users) => {
+//         let html = '';
+//         for (let i = 0; i < users.length; i++) {
+//           html += generateUsersHTML(users[i].username, users[i].img, currentUser);
+//         }
+//         let parentContainer = document.createElement('div');
+//         parentContainer.setAttribute('id', 'friends-container');
+//         parentContainer.innerHTML = html;
+//         let x = document.getElementById('friends');
+//         if (x) {
+//           x.innerHTML = '';
+//           x.appendChild(parentContainer);
+//         }
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//         alert('Something went wrong trying to display friends');
+//       });
+// }
+
+async function exploreFriends() {
     console.log("exploreFriends function called");
     let url = '/users/';
     let p = fetch(url);
@@ -43,10 +70,10 @@ function exploreFriends() {
       .then((response) => {
         return response.json();
       })
-      .then((users) => {
+      .then(async (users) => {
         let html = '';
         for (let i = 0; i < users.length; i++) {
-          html += generateUsersHTML(users[i].username, users[i].img, currentUser);
+          html += await generateUsersHTML(users[i].username, users[i].img, currentUser);
         }
         let parentContainer = document.createElement('div');
         parentContainer.setAttribute('id', 'friends-container');
@@ -64,40 +91,58 @@ function exploreFriends() {
 }
 
 // Generate divs for each user, including their name picture and add friend button
-function generateUsersHTML(username, profilePicture, currentUser) {
+async function generateUsersHTML(username, profilePicture, currentUser) {
+    // Current user excluded from explore friends 
     if (username === currentUser) {
         return '';
     }
-    // Create the HTML elements
+
     const userDiv = document.createElement('div');
     const usernameDiv = document.createElement('div');
     const avatarImg = document.createElement('img');
     const addButton = document.createElement('button');
-  
-    // Change appearance
+
     avatarImg.width = 100;
     avatarImg.height = 100;
-  
-    // Label button
-    addButton.innerText = 'Add Friend';
+
     addButton.setAttribute('friendID', username);
-  
-    // Set the class names
+
     userDiv.className = 'explore-user';
     usernameDiv.className = 'explore-username';
     avatarImg.className = 'explore-avatar';
-    addButton.className = 'add-friend-button';
-  
-    // Set content
+
     usernameDiv.textContent = username;
     avatarImg.src = profilePicture;
-  
-    // Append the child elements
+
     userDiv.appendChild(avatarImg);
     userDiv.appendChild(usernameDiv);
     userDiv.appendChild(addButton);
 
-    // Return the HTML string
+    const url = 'http://localhost:3000/isFriend';
+    const params = {
+        user: currentUser,
+        friend: username
+    };
+    const options = {
+        method: 'POST',
+        body: JSON.stringify(params),
+        headers: {'Content-Type': 'application/json'}
+    };
+
+    const response = await fetch(url, options);
+    const result = await response.json();
+
+    if (result.isFriend) {
+        addButton.innerText = 'Added';
+        addButton.className = 'added-friend-button';
+        addButton.disabled = true;
+    } else {
+        addButton.innerText = 'Add Friend';
+        addButton.className = 'add-friend-button';
+    }
+
+    addButton.classList.add('add-friend-button');
+
     return userDiv.outerHTML;
 }
 
