@@ -15,6 +15,10 @@ function chat(){
     window.location.href = '/app/chat.html';
 }
 
+function exploreFriends(){
+  window.location.href = '/app/exploreFriends.html';
+}
+
 function viewFollowing(){
   window.location.href = '/app/following.html';
 }
