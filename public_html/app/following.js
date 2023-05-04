@@ -8,8 +8,10 @@ function getUserName() {
 }
 
 async function getAllFollowing() {
-  let url = '/followed';
+  const currentUser = getUserName();
+  let url = `/followed?user=${currentUser}`;
   let p = fetch(url);
+  console.log(p);
   let ps = p
     .then((response) => {
       return response.json();
@@ -18,6 +20,7 @@ async function getAllFollowing() {
       let html = '';
       for (let i = 0; i < followedUser.length; i++) {
         html += await generateFollowlistHTML(followedUser[i].username, followedUser[i].img);
+        console.log("USER: " + followedUser[i].username);
       }
       let parentContainer = document.createElement('div');
       parentContainer.setAttribute('id', 'followed-container');
@@ -33,6 +36,7 @@ async function getAllFollowing() {
       alert('Something went wrong trying to display followed Users');
     });
 }
+
 
 function getFollowingData() {
   console.log('getFollowingData')
