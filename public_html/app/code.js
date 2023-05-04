@@ -18,6 +18,7 @@
      and making requests using the Fetch API. We stramlined collaboration with Github version control. 
 
   */
+
 function getPosts() {
   let url = '/posts/';
   // TODO go back and change the /categories/ route to /posts/
@@ -87,5 +88,6 @@ $(document).ready(function () {
   });
 
 });
+
 
 // setInterval(getPosts, 5000);

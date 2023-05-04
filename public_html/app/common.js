@@ -1,5 +1,6 @@
 currentUser = getUserName();
 
+
 function getUserName(){
   console.log(document.cookie);
   let userName = document.cookie.split("%22")[3];

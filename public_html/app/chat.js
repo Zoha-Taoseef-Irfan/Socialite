@@ -22,6 +22,10 @@ function exploreFriends(){
 function viewFollowing(){
   window.location.href = '/app/following.html';
 }
+
+function help(){
+  window.location.href = '/app/help.html';
+}
 function scrollToLatestMessage() {
   const messagesContainer = document.getElementById('messages');
   messagesContainer.scrollTop = messagesContainer.scrollHeight;

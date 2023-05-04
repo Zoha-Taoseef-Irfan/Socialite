@@ -1,3 +1,27 @@
+/* 
+     Author: Amimul Ehsan Zoha; Taoseef Aziz, Irfan Ahmad
+     Course: CS337 Spring 2023
+     Project: Socialite Social Media
+
+     
+     It is the server of full stack application using html,css , javascript, express and node.js and MongoDb which is a 
+     clone of will be a social networking web app, similar to that of Facebook. (Our version is called Socialite)
+     The app have the primary functionality in which the users can create accounts and login to their individual accounts. 
+     For login, there is some sort of authentication mechanism. Once a user logs in, he will be assigned a session and cookies
+     will be used to keep track of a time after which this session will be over and redirected to the login page. After logging in, 
+     the user is redirected to the home page, which will be similar to that of a facebook. The home page will contain contents like the timeline of recent posts (of all users), 
+     and each post will have the option to be liked and commented on. There will be the option to upload images in a post. Users can be friends with each other. 
+     Users will be able to chat in a global chatroom messaging app inside of Socialite. There will be another page to view the
+     users own profile photo, his information and bio. The post images are nicely styled, they have hovering effect, and other
+     nice styling additions. The client serves sure of all this functionality by making different requests to the server
+     using fetch api. The server has well defined MongoDB schemas which outline the whole database of the socialite app. 
+     The experience of developing this large scale project was difficult, yet worthwhile and an incredible learning experience 
+     in which we gained mastery over making server using express framework, designing large scale web app, working with mongo BD 
+     and making requests using the Fetch API. We stramlined collaboration with Github version control. 
+  */
+
+
+// importing libraries
 const mongoose = require('mongoose');
 const express = require('express');
 const cookieParser = require('cookie-parser');
@@ -64,6 +88,16 @@ var messageSchema = new mongoose.Schema({
   message: String
 });
 var Item = mongoose.model('Item',messageSchema);
+
+
+/*
+This function appears to be an authentication middleware that is designed to protect certain routes in a web application.
+function takes three parameters, namely "req", "res", and "next", which are standard parameters used in middleware functions in Node.js.
+The function checks whether the request contains a cookie called "login". If the cookie exists, the function attempts to verify the user's session
+ by calling a function called "doesUserHaveSession" from an object called "cm.sessions".
+If the session is valid, the function calls the "next" function to continue processing the request. If the session is not valid or the cookie doesn't exist, 
+the function redirects the user to the account index page.
+*/
 
 function authenticate(req, res, next) {
   let c = req.cookies;
@@ -135,6 +169,9 @@ app.post('/create/item/', (req, res) => {
   });
 });
 
+/**
+ * This route is for creating a new comment.
+ */
 app.get('/create/comment/:postid/:username/:comment', (req, res) => {
   let pid = req.params.postid;
   let uname = req.params.username;
@@ -162,7 +199,9 @@ app.get('/create/comment/:postid/:username/:comment', (req, res) => {
     res.end('finding posts when commenting failed');
   });
 });
-
+/**
+ * This route is for liking a post 
+ */
 app.get('/like/post/:postid/:username', (req, res) => {
   let pid = req.params.postid;
   let uname = req.params.username;
@@ -207,7 +246,9 @@ app.get('/like/post/:postid/:username', (req, res) => {
     res.end('finding posts when liking failed');
   });
 });
-
+/**
+ * This route is for getting the all the posts of socialite 
+ */
 app.get('/posts/', (req, res) => {
   let p1 = Post.find({}).exec();
   
@@ -220,7 +261,9 @@ app.get('/posts/', (req, res) => {
   });
 });
 
-
+/**
+ * This route is for getting the posts for the user 
+ */
 app.get('/posts/:user', (req, res) => {
   let p1 = Post.find({username:req.params.user}).exec();
   p1.then( (results) => { 
@@ -232,6 +275,9 @@ app.get('/posts/:user', (req, res) => {
   });
 });
 
+/**
+ * This route is for creating a post (use an image to create a post) 
+ */
 app.post('/create/post/', upload.single("postImage"), (req, res) => {
   let PostToSave = {username: req.body.username, text: req.body.postText, image: getImgRoute(req.file.path)};
 
@@ -252,8 +298,10 @@ app.post('/create/post/', upload.single("postImage"), (req, res) => {
   });
 });
 
+/**
+ * This route is for getting a users profile
+ */
 app.get('/profile/:user', (req, res) => {
-  //console.log("this is the req . param . user----" + req.params.user);
   let p1 = User.find({username:req.params.user}).exec();
 
   p1.then( (results) => { 
@@ -268,7 +316,7 @@ app.get('/profile/:user', (req, res) => {
 });
 
 /**
- * This route is for creating a new user account.
+ * This route is for creating a new comment
  */
 app.get('/create/comment/:postid', (req, res) => {
   let p1 = Post.find({_id: req.body.postid}).exec();
@@ -380,7 +428,9 @@ app.get('/account/login/:username/:password', (req, res) => {
     res.end('login failed');
   });
 });
-
+/**
+ * This route is used for getting the chats of the global messenger app
+ */
 app.get('/chats', (req, res) => {
 
   let p1 = Item.find({}).exec();
@@ -397,7 +447,9 @@ app.get('/chats', (req, res) => {
     res.end("fail");
   });
 });
-
+/**
+ * This route is used for getting the chats of the global messenger app
+ */
 app.post('/chats/post', parser.json(),(req, res) => {
     console.log(req.body);
     let n = req.body.alias;
@@ -417,6 +469,9 @@ app.post('/chats/post', parser.json(),(req, res) => {
     });
   });
 
+  /**
+ * This function is used for getting the image routes 
+ */
   function getImgRoute(inputString) {
     if(inputString.includes('/')) {
       const pattern = /uploads\/\d+\.\w+$/;
@@ -436,8 +491,10 @@ app.post('/chats/post', parser.json(),(req, res) => {
     }
       
    }
-
-   // Return just one user with matching username
+/**
+ * This route is used for  Returning just one user with matching username
+ */
+  
   app.get('/users/:username', (req, res) => {
     let p1 = User.find({username:req.params.username}).exec();
     p1.then((results) => {
@@ -449,8 +506,8 @@ app.post('/chats/post', parser.json(),(req, res) => {
     });
   });
 
-
-  // Return all users currently registered on Socialite
+/**
+ * This route is used for  Returning Return all users currently registered on Socialite */
   app.get('/users', (req, res) => {
     let p1 = User.find({}).exec();
     p1.then((results) => {
@@ -515,6 +572,8 @@ app.post('/chats/post', parser.json(),(req, res) => {
     }
   });
 
+/**
+ * This route is used for determining if two users follow each other */
   app.post('/isFollowing', async function(req, res) {
     const userID = req.body.user;
     const friendID = req.body.friend;
@@ -538,18 +597,6 @@ app.post('/chats/post', parser.json(),(req, res) => {
     }
   });
         
-  // ***CLEAR EXISTING DATABASE***
-  // async function deleteAllData() {
-  //   try {
-  //     await Post.deleteMany({});
-  //     await User.deleteMany({});
-  //     console.log('All data deleted successfully.');
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // }
-  
-  // deleteAllData();
 
 // Start up the server to listen on port 80
 const port = 3000;
