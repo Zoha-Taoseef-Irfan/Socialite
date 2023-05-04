@@ -74,7 +74,7 @@ $(document).ready(function () {
 
             console.log("SUCCESS : ", data);
               $("#createPostButton").prop("disabled", false);
-
+            getPosts();
           },
           error: function (e) {
 

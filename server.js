@@ -437,6 +437,18 @@ app.post('/chats/post', parser.json(),(req, res) => {
       
    }
 
+   // Return just one user with matching username
+  app.get('/users/:username', (req, res) => {
+    let p1 = User.find({username:req.params.username}).exec();
+    p1.then((results) => {
+      res.json(results[0]);
+    });
+    p1.catch((error) => {
+      console.log(error);
+      res.status(500).send('Error retrieving users.');
+    });
+  });
+
 
   // Return all users currently registered on Socialite
   app.get('/users', (req, res) => {
@@ -454,25 +466,23 @@ app.post('/chats/post', parser.json(),(req, res) => {
     });
   });
 
-  // Return all users that are being followed
-  app.get('/followed', async (req, res) => {
-    const userID = req.query.user;
-    try {
-      // Find User objects for current user and user to be followed
-      const user = await User.findOne({ username: userID }).exec();
-      if (!user) {
-        res.status(404).send('User not found');
-        return;
-      }
-      const followList = user.following;
-      res.status(200).json(followList);
-    } catch (err) {
-      console.error(err);
-      res.status(500).send('Error returning follow list');
-    }
+  // Return all users currently registered on Socialite
+  app.get('/followed/:userID', (req, res) => {
+    let p1 = User.find({}).exec();
+    p1.then((results) => {
+      const users = results.map((user) => ({
+        username: user.username,
+        img: user.img,
+      }));
+      res.json(users);
+    });
+    p1.catch((error) => {
+      console.log(error);
+      res.status(500).send('Error retrieving users.');
+    });
   });
 
-
+  
   // Create friendship between two users
   app.post('/followUser', async function(req, res) {
     const userID = req.body.user;
