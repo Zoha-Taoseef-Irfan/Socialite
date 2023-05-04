@@ -35,14 +35,14 @@ function getAllFollowing() {
 
             // need to filter with users followed: 
             // user.following.includes(friend._id) --> need following list       
-              html +=  generateFollowlistHTML(allusers[i].username, allusers[i].img, currentUser);
+              generateFollowlistHTML(allusers[i].username, allusers[i].img, currentUser);
             }
 
-            var x = document.getElementById('followedUsers');
-            if (x) {
-              x.innerHTML = html;
-              //x.appendChild(parentContainer);
-            }
+            // var x = document.getElementById('followedUsers');
+            // if (x) {
+            //   x.innerHTML = html;
+            //   //x.appendChild(parentContainer);
+            // }
       })
         
       }).catch((err)=> {
@@ -62,19 +62,19 @@ function getFollowingData() {
 
 async function generateFollowlistHTML(username, profilePicture, currentUser) {
 
-  const url = 'http://localhost:3000/isFollowing';
-  const params = {
+  var url = 'http://localhost:3000/isFollowing';
+  var params = {
     user: currentUser,
     friend: username
   };
-  const options = {
+  var options = {
       method: 'POST',
       body: JSON.stringify(params),
       headers: {'Content-Type': 'application/json'}
   };
 
-  const response = await fetch(url, options);
-  const result = await response.json();
+  var response = await fetch(url, options);
+  var result = await response.json();
 
   if (!result.isFollowing) {
     return '';
@@ -83,10 +83,10 @@ async function generateFollowlistHTML(username, profilePicture, currentUser) {
   console.log("USERNAME " + currentUser);
   console.log("CHECKING IF WERE FOLLOWING " + username);
   console.log("Image Tag" + profilePicture);
-  const userDiv = document.createElement('div');
-  const avatarImg = document.createElement('img');
-  const usernameDiv = document.createElement('div');
-  const viewButton = document.createElement('button');
+  var userDiv = document.createElement('div');
+  var avatarImg = document.createElement('img');
+  var usernameDiv = document.createElement('div');
+  // var viewButton = document.createElement('button');
 
   avatarImg.width = 100;
   avatarImg.height = 100;
@@ -94,16 +94,26 @@ async function generateFollowlistHTML(username, profilePicture, currentUser) {
   userDiv.className = 'followed-user';
   avatarImg.className = 'followed-avatar';
   usernameDiv.className = 'followed-username';
-  viewButton.className = 'followed-button';
+  // viewButton.className = 'followed-button';
 
   avatarImg.src = profilePicture;
   usernameDiv.textContent = username;
-  viewButton.textContent = 'View';
+  // viewButton.textContent = 'View';
 
   userDiv.appendChild(avatarImg);
   userDiv.appendChild(usernameDiv);
-  userDiv.appendChild(viewButton);
+  // userDiv.appendChild(viewButton);
 
-  console.log("USERDIV OUTPUT " + userDiv.outerHTML);
+  var x = document.getElementById('followedUsers');
+  if (x) {
+    x.innerHTML += userDiv.outerHTML;
+    //x.appendChild(parentContainer);
+  }
   return userDiv.outerHTML;
 }
+
+// document.addEventListener('click', (event) => {
+//   if (event.target.classList.contains('follow-button')) {
+//     window.href=
+//   }
+// }
