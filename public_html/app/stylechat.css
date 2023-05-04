@@ -6,8 +6,6 @@
   100% {opacity: 1;}
 }
 
-
-
 #social {
   text-align: center;
   font-size: 24px;
@@ -15,11 +13,13 @@
   color: #fff;
   padding: 20px;
 }
+
 .segment {
   display: flex;
   flex-direction: column;
   height: 100%;
   padding: 10px;
+  justify-content: space-between; /* Add this */
 }
 
 #messages {
@@ -51,7 +51,7 @@
 #createMessage {
   display: flex;
   flex-direction: column;
-  margin-top: auto;
+  /* margin-top: auto; Remove this */
   padding-top: 10px;
 }
 

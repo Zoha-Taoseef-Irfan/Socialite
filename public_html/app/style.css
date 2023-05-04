@@ -340,10 +340,6 @@ body {
   padding: 20px;
 }
 
-#social {
-  display: flex;
-}
-
 #followedUsers {
   width: 25%;
 }
