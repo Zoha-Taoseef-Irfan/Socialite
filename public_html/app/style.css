@@ -67,7 +67,8 @@ body {
 #createPostButton,
 #goToMyProfileButton,
 #goToMessageButton,
-#exploreFriendsButton {
+#exploreFriendsButton,
+#viewFollowingButton {
   background-color: #3b5998;
   border: none;
   border-radius: 4px;
@@ -285,6 +286,12 @@ body {
   justify-content: center;
 }
 
+#followed-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .explore-user {
   background-color: #fff;
   border: 1px solid #dddfe2;
@@ -324,4 +331,23 @@ body {
   font-weight: bold;
   margin-top: 10px;
   padding: 6px 16px;
+}
+
+.followingSegment {
+  box-sizing: border-box;
+  height: 100vh;
+  float: left;
+  padding: 20px;
+}
+
+#social {
+  display: flex;
+}
+
+#followedUsers {
+  width: 25%;
+}
+
+#followingData {
+  width: 75%;
 }

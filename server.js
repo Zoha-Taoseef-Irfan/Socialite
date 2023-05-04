@@ -38,7 +38,7 @@ mongoose.connection.on('error', () => {
   hash: String,
   email:String,
   bio:String,
-  friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   img: String
 });
 
@@ -453,6 +453,25 @@ app.post('/chats/post', parser.json(),(req, res) => {
       res.status(500).send('Error retrieving users.');
     });
   });
+
+  // Return all users that are being followed
+  app.get('/followed', async (req, res) => {
+    const userID = req.query.user;
+    try {
+      // Find User objects for current user and user to be followed
+      const user = await User.findOne({ username: userID }).exec();
+      if (!user) {
+        res.status(404).send('User not found');
+        return;
+      }
+      const followList = user.following;
+      res.status(200).json(followList);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Error returning follow list');
+    }
+  });
+
 
   // Create friendship between two users
   app.post('/followUser', async function(req, res) {
