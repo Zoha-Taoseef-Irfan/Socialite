@@ -456,23 +456,24 @@ app.post('/chats/post', parser.json(),(req, res) => {
   });
 
   // Return all users that are being followed
-  app.get('/followed', async (req, res) => {
-    const userID = req.query.user;
+  app.get('/followed/:userID', async (req, res) => {
+    const userID = req.params.userID;
     try {
-      // Find User objects for current user and user to be followed
-      const user = await User.findOne({ username: userID }).exec();
-      if (!user) {
-        res.status(404).send('User not found');
-        return;
+      const user = await User.findOne({ username: userID });
+      console.log("USERNAME: "  + user);
+      const followedUsers = [];
+      for (let i = 0; i < user.following.length; i++) {
+        followedUsers.push(user.following[i]);
       }
-      const followList = user.following;
-      res.status(200).json(followList);
+
+      const test = await User.findOne({ _id : followedUsers[0] });
+      console.log("Test Object: "  + test);
+      res.json(test);
     } catch (err) {
       console.error(err);
-      res.status(500).send('Error returning follow list');
+      res.status(500).send('Error retrieving followed users.');
     }
   });
-
 
   // Create friendship between two users
   app.post('/followUser', async function(req, res) {

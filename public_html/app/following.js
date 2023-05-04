@@ -8,19 +8,18 @@ function getUserName() {
 }
 
 async function getAllFollowing() {
-  const currentUser = getUserName();
-  let url = `/followed?user=${currentUser}`;
+  let url = '/followed/'+ getUserName();
   let p = fetch(url);
   console.log(p);
   let ps = p
     .then((response) => {
       return response.json();
     })
-    .then(async (followedUser) => {
+    .then((followedUser) => {
       let html = '';
+      console.log("USER: " + followedUser[0]);
       for (let i = 0; i < followedUser.length; i++) {
-        html += await generateFollowlistHTML(followedUser[i].username, followedUser[i].img);
-        console.log("USER: " + followedUser[i].username);
+        html += generateFollowlistHTML(followedUser[i].username, followedUser[i].img);
       }
       let parentContainer = document.createElement('div');
       parentContainer.setAttribute('id', 'followed-container');
