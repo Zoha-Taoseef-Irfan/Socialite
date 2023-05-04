@@ -1,4 +1,5 @@
 currentUser = getUserName();
+viewUsers = "";
 
 function getUserName() {
     console.log(document.cookie);
@@ -86,7 +87,7 @@ async function generateFollowlistHTML(username, profilePicture, currentUser) {
   var userDiv = document.createElement('div');
   var avatarImg = document.createElement('img');
   var usernameDiv = document.createElement('div');
-  // var viewButton = document.createElement('button');
+  var viewButton = document.createElement('button');
 
   avatarImg.width = 100;
   avatarImg.height = 100;
@@ -94,15 +95,17 @@ async function generateFollowlistHTML(username, profilePicture, currentUser) {
   userDiv.className = 'followed-user';
   avatarImg.className = 'followed-avatar';
   usernameDiv.className = 'followed-username';
-  // viewButton.className = 'followed-button';
+  viewButton.className = 'followed-button';
 
   avatarImg.src = profilePicture;
   usernameDiv.textContent = username;
-  // viewButton.textContent = 'View';
+  viewButton.textContent = 'View';
+
+  viewButton.setAttribute('viewID', username);
 
   userDiv.appendChild(avatarImg);
   userDiv.appendChild(usernameDiv);
-  // userDiv.appendChild(viewButton);
+  userDiv.appendChild(viewButton);
 
   var x = document.getElementById('followedUsers');
   if (x) {
@@ -112,8 +115,32 @@ async function generateFollowlistHTML(username, profilePicture, currentUser) {
   return userDiv.outerHTML;
 }
 
-// document.addEventListener('click', (event) => {
-//   if (event.target.classList.contains('follow-button')) {
-//     window.href=
-//   }
-// }
+function getPostsForUser(username) {
+  console.log('getting posts for specific user')
+  let url = '/posts/'+ username;
+
+  let p = fetch(url);
+  let ps = p.then( (response) => {
+    return response.json();
+  }).then((posts) => { 
+    let html = '';
+    for (let i = posts.length-1; i >= 0; i--) {
+      let curPost = posts[i];
+      html += generatePostHTML(curPost.username, curPost.dateCreated, curPost.text, curPost.comments, curPost.avatar, curPost.image, curPost._id, curPost.likeCount, curPost.likedUsers);
+    }
+    let x = document.getElementById('followingData');
+    if (x){
+      x.innerHTML = html;
+    }
+    
+  }).catch((error) => { 
+      console.log(error);
+    alert('Something went wrong trying to set html for posts');
+  });
+}
+document.addEventListener('click', (event) => {
+  console.log('clicking')
+  if (event.target.classList.contains('followed-button')) {
+    getPostsForUser(event.target.viewID);
+  }
+});

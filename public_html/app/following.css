@@ -1,3 +1,38 @@
+/* Segments */
+.segment {
+    background-color: #fff;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Social segment */
+  #social {
+    text-align: center;
+    font-size: 24px;
+    background-color: #3b5998;
+    color: #fff;
+    padding: 20px;
+  }
+  
+  /* Create Post segment */
+  .segment {
+    background-color: #fff;
+    border: 1px solid #dddfe2;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+    padding: 20px;
+    width: 90%;
+    margin: 20px auto;
+  }
+  
+  .segment > div:first-child {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+
 /* Style for followed users section */
 #followedUsers {
     display: flex;
