@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Social</title>
+  <link rel="stylesheet" type="text/css" href="./index.css">
+  <title>Socialite</title>
 </head>
 <body>
 
-  <div class="segment" id="social">
-    <h2>Social</h2>
+  <div id="logo">
+    Socialite
   </div>
 
   <script>
-  window.location.href = '/account/index.html';
+    setTimeout(() => { document.getElementById('logo').classList.add('animate'); }, 1000);
+    setTimeout(() => { window.location.href = '/account/index.html'; },2000);
  </script>
 
 </body>
