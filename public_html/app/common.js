@@ -68,7 +68,7 @@ function generatePostHTML(username, date, postText, comments, img, postImg, post
     console.log("postid= "+postId)
 
     let functioncallComment = "postComment('"+ getUserName()+"','"+postId+"');";
-    functioncallComment += "getPosts()";
+    functioncallComment += "getPosts();";
 
     postCommentsDiv.innerHTML += "<label for='"+postId+"'>Make a comment</label>"
     postCommentsDiv.innerHTML += "<input type=text class=postCommentsInput id='"+postId+"'/>"
@@ -88,7 +88,7 @@ function generatePostHTML(username, date, postText, comments, img, postImg, post
     }
     let likeid = postId+'_like'
     let functioncallLike = "likePost('"+ getUserName()+"','"+likeid+"');";
-    functioncallLike += "getPosts()";
+    functioncallLike += "getPosts();";
     let likeBtnHTML = "<button "+likeBtnStyle+" id="+"'"+likeid+"'"+"class=fb-like-button onclick="+functioncallLike+">"+likeCount+"</button>"; 
     postCommentsDiv.insertAdjacentHTML('beforeend',likeBtnHTML);
 
