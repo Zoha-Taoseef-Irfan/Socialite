@@ -1,3 +1,18 @@
+/*
+Authors: Amimul Ehsan Zoha, Taoseef Aziz, Irfan Ahmad
+Course: CS337 Spring 2023
+Project: Socialite Social Media
+
+Description:
+This is a JavaScript class named CustomSessions that provides methods for managing user sessions. 
+It has a sessions object and a SESSION_LENGTH property that determines how long a session will last.
+The class has an addOrUpdateSession method that takes a user as input and generates a random sessionId. 
+It updates the start time for the user's session if it already exists, or creates a new session with the generated sessionId and start time.
+The doesUserHaveSession method takes a user and sessionId as input and checks if the user has a session with the specified sessionId.
+The cleanupSessions method is responsible for removing expired sessions. It iterates through all the sessions and removes sessions for users whose start time is older than SESSION_LENGTH.
+Lastly, the startCleanup method uses the setInterval function to execute the cleanupSessions method every 2 seconds to continuously clean up expired sessions.
+The code exports an instance of the CustomSessions class, making it accessible to other parts of the application that require session management.
+*/
 
 class CustomSessions {
 

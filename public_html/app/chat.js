@@ -1,3 +1,17 @@
+/**
+Authors: Amimul Ehsan Zoha, Taoseef Aziz, Irfan Ahmad
+Course: CS337 Spring 2023
+Project: Socialite Social Media
+Description: This JavaScript file contains functions for a social media web application.
+The first function, getUserName(), retrieves the username from a cookie and returns it.
+The following functions, myProfile(), chat(), exploreFriends(), and viewFollowing(),
+redirect the user to various pages within the web application.
+The scrollToLatestMessage() function scrolls to the latest message in a chat container.
+The getMessageItems() function uses the fetch API to get messages from the server and display them in a chat container.
+The createMessageItem() function sends a message to the server for storage and clears the message text box.
+The setInterval() method is used to call getMessageItems() function at an interval of 1500 milliseconds.
+*/
+
 currentUser = getUserName();
 
 function getUserName(){
