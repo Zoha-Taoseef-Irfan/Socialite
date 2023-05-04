@@ -12,7 +12,7 @@ function addFriend(addButton) {
     const userID = getUserName();
     const friendID = addButton.getAttribute('friendID');
 
-    const url = `http://localhost:3000/addFriend`;
+    const url = `http://localhost:3000/followUser`;
     const params = {
         user: userID,
         friend: friendID
@@ -26,44 +26,13 @@ function addFriend(addButton) {
     fetch(url, options)
         .then(response => {
             addButton.style.backgroundColor = '#8BC34A';
-            addButton.innerText = 'Added';
+            addButton.innerText = 'Following';
             addButton.disabled = true; // Disable button to prevent multiple adds
         })
         .catch(error => console.error(error));
 }
-  
-
-// Output all users on Socialite onto the page
-// function exploreFriends() {
-//     console.log("exploreFriends function called");
-//     let url = '/users/';
-//     let p = fetch(url);
-//     let ps = p
-//       .then((response) => {
-//         return response.json();
-//       })
-//       .then((users) => {
-//         let html = '';
-//         for (let i = 0; i < users.length; i++) {
-//           html += generateUsersHTML(users[i].username, users[i].img, currentUser);
-//         }
-//         let parentContainer = document.createElement('div');
-//         parentContainer.setAttribute('id', 'friends-container');
-//         parentContainer.innerHTML = html;
-//         let x = document.getElementById('friends');
-//         if (x) {
-//           x.innerHTML = '';
-//           x.appendChild(parentContainer);
-//         }
-//       })
-//       .catch((error) => {
-//         console.log(error);
-//         alert('Something went wrong trying to display friends');
-//       });
-// }
 
 async function exploreFriends() {
-    console.log("exploreFriends function called");
     let url = '/users/';
     let p = fetch(url);
     let ps = p
@@ -118,7 +87,7 @@ async function generateUsersHTML(username, profilePicture, currentUser) {
     userDiv.appendChild(usernameDiv);
     userDiv.appendChild(addButton);
 
-    const url = 'http://localhost:3000/isFriend';
+    const url = 'http://localhost:3000/isFollowing';
     const params = {
         user: currentUser,
         friend: username
@@ -132,22 +101,22 @@ async function generateUsersHTML(username, profilePicture, currentUser) {
     const response = await fetch(url, options);
     const result = await response.json();
 
-    if (result.isFriend) {
-        addButton.innerText = 'Added';
-        addButton.className = 'added-friend-button';
+    if (result.isFollowing) {
+        addButton.innerText = 'Following';
+        addButton.className = 'following-button';
         addButton.disabled = true;
     } else {
-        addButton.innerText = 'Add Friend';
-        addButton.className = 'add-friend-button';
+        addButton.innerText = 'Follow';
+        addButton.className = 'follow-button';
     }
 
-    addButton.classList.add('add-friend-button');
+    addButton.classList.add('follow-button');
 
     return userDiv.outerHTML;
 }
 
 document.addEventListener('click', (event) => {
-    if (event.target.classList.contains('add-friend-button')) {
+    if (event.target.classList.contains('follow-button')) {
       addFriend(event.target);
     }
 });
