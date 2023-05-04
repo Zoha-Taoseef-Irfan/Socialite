@@ -25,7 +25,7 @@ function addFriend(addButton) {
     const userID = getUserName();
     const friendID = addButton.getAttribute('friendID');
 
-    const url = `http://localhost:3000/followUser`;
+    const url = `/followUser`;
     const params = {
         user: userID,
         friend: friendID
@@ -100,7 +100,7 @@ async function generateUsersHTML(username, profilePicture, currentUser) {
     userDiv.appendChild(usernameDiv);
     userDiv.appendChild(addButton);
 
-    const url = 'http://localhost:3000/isFollowing';
+    const url = '/isFollowing';
     const params = {
         user: currentUser,
         friend: username
@@ -108,7 +108,9 @@ async function generateUsersHTML(username, profilePicture, currentUser) {
     const options = {
         method: 'POST',
         body: JSON.stringify(params),
-        headers: {'Content-Type': 'application/json'}
+        headers: {'Content-Type': 'application/json',
+        'Access-Control-Request-Private-Network': 'true',
+        'Access-Control-Allow-Private-Network': true}
     };
 
     const response = await fetch(url, options);
