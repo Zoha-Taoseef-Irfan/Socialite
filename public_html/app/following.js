@@ -8,10 +8,10 @@ function getUserName() {
 }
 
 function getAllFollowing() {
-  let url = '/followed/'+getUserName();
+  var url = '/followed/'+getUserName();
   console.log("fetching at URL: "+url)
-  let p = fetch(url);
-  let ps = p
+  var p = fetch(url);
+  var ps = p
     .then((response) => {
       console.log("got response at URL: "+response)
       return response.json();
@@ -20,13 +20,13 @@ function getAllFollowing() {
       console.log("users = "+allusers)
       console.log()
 
-      let url = '/users/'+getUserName();
+      var url = '/users/'+getUserName();
       console.log("fetching at URL: "+url)
-      let p2 = fetch(url);
+      var p2 = fetch(url);
       p2.then(response=> {
         response.json().then(userObj=> {
-          let html = '';
-          for (let i = 0; i < allusers.length; i++) {
+          var html = '';
+          for (var i = 0; i < allusers.length; i++) {
             console.log("OBJECT.FOLLOWINGL "+userObj.following)
 
             console.log("allusers[i].name = "+allusers[i].username)
@@ -34,18 +34,14 @@ function getAllFollowing() {
             console.log("allusers[i].img = "+allusers[i].img)
 
             // need to filter with users followed: 
-            // user.following.includes(friend._id) --> need following list
-              
-
-              html +=  generateFollowlistHTML(allusers[i].username, allusers[i].img);
+            // user.following.includes(friend._id) --> need following list       
+              html +=  generateFollowlistHTML(allusers[i].username, allusers[i].img, currentUser);
             }
-            let parentContainer = document.createElement('div');
-            parentContainer.setAttribute('id', 'friends-container');
-            parentContainer.innerHTML = html;
-            let x = document.getElementById('followedUsers');
+
+            var x = document.getElementById('followedUsers');
             if (x) {
-              x.innerHTML = '';
-              x.appendChild(parentContainer);
+              x.innerHTML = html;
+              //x.appendChild(parentContainer);
             }
       })
         
@@ -64,7 +60,29 @@ function getFollowingData() {
   console.log('getFollowingData')
 }
 
-function generateFollowlistHTML(username, profilePicture) {
+async function generateFollowlistHTML(username, profilePicture, currentUser) {
+
+  const url = 'http://localhost:3000/isFollowing';
+  const params = {
+    user: currentUser,
+    friend: username
+  };
+  const options = {
+      method: 'POST',
+      body: JSON.stringify(params),
+      headers: {'Content-Type': 'application/json'}
+  };
+
+  const response = await fetch(url, options);
+  const result = await response.json();
+
+  if (!result.isFollowing) {
+    return '';
+  };
+
+  console.log("USERNAME " + currentUser);
+  console.log("CHECKING IF WERE FOLLOWING " + username);
+  console.log("Image Tag" + profilePicture);
   const userDiv = document.createElement('div');
   const avatarImg = document.createElement('img');
   const usernameDiv = document.createElement('div');
@@ -86,11 +104,6 @@ function generateFollowlistHTML(username, profilePicture) {
   userDiv.appendChild(usernameDiv);
   userDiv.appendChild(viewButton);
 
-  // Add event listener to viewButton
-  viewButton.addEventListener('click', () => {
-    console.log('VIEW BUTTON CLICKED');
-    window.location.href = `/profile/${username}`;
-  });
-
+  console.log("USERDIV OUTPUT " + userDiv.outerHTML);
   return userDiv.outerHTML;
 }

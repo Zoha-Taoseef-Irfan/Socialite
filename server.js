@@ -438,7 +438,7 @@ app.post('/chats/post', parser.json(),(req, res) => {
       
    }
 
-   // Return all users currently registered on Socialite
+   // Return just one user with matching username
   app.get('/users/:username', (req, res) => {
     let p1 = User.find({username:req.params.username}).exec();
     p1.then((results) => {
