@@ -2,7 +2,8 @@
      Author: Amimul Ehsan Zoha; Taoseef Aziz, Irfan Ahmad
      Course: CS337 Spring 2023
      Project: Socialite Social Media
-     It is the client of full stack application using html,css , javascript, express and node.js and MongoDb which is a 
+     
+     Description: It is the client of full stack application using html,css , javascript, express and node.js and MongoDb which is a 
      clone of will be a social networking web app, similar to that of Facebook. (Our version is called Socialite)
      The app have the primary functionality in which the users can create accounts and login to their individual accounts. 
      For login, there is some sort of authentication mechanism. Once a user logs in, he will be assigned a session and cookies

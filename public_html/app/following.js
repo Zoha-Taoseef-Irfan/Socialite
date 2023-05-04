@@ -1,3 +1,16 @@
+/*
+Authors: Amimul Ehsan Zoha, Taoseef Aziz, Irfan Ahmad
+Course: CS337 Spring 2023
+Project: Socialite Social Media
+
+This code defines several functions related to retrieving and displaying user information for the Socialite Social Media project.
+The getUserName() function retrieves the username of the current user from a cookie and sets it as the global variable currentUser.
+The getAllFollowing() function retrieves a list of all users that the current user is following and generates HTML elements for each user using the generateFollowlistHTML() function.
+The generateFollowlistHTML() function creates HTML elements for each user, including their profile picture, username, and view button. It also checks if the current user is following the user being displayed before creating the HTML.
+The getPostsForUser() function retrieves all posts made by a specific user and generates HTML elements for each post using the generatePostHTML() function.
+The click event listener at the bottom of the code executes the getPostsForUser() function when a user clicks the view button for a user in their followed list.
+*/
+
 currentUser = getUserName();
 viewUsers = "";
 
@@ -29,21 +42,12 @@ function getAllFollowing() {
           var html = '';
           for (var i = 0; i < allusers.length; i++) {
             console.log("OBJECT.FOLLOWINGL "+userObj.following)
-
             console.log("allusers[i].name = "+allusers[i].username)
-            // console.log("users[i].following = "+users[i].following)
-            console.log("allusers[i].img = "+allusers[i].img)
+            console.log("allusers[i].img = "+allusers[i].img)  
 
-            // need to filter with users followed: 
-            // user.following.includes(friend._id) --> need following list       
-              generateFollowlistHTML(allusers[i].username, allusers[i].img, currentUser);
-            }
+            generateFollowlistHTML(allusers[i].username, allusers[i].img, currentUser);
+          }
 
-            // var x = document.getElementById('followedUsers');
-            // if (x) {
-            //   x.innerHTML = html;
-            //   //x.appendChild(parentContainer);
-            // }
       })
         
       }).catch((err)=> {
@@ -110,7 +114,6 @@ async function generateFollowlistHTML(username, profilePicture, currentUser) {
   var x = document.getElementById('followedUsers');
   if (x) {
     x.innerHTML += userDiv.outerHTML;
-    //x.appendChild(parentContainer);
   }
   return userDiv.outerHTML;
 }

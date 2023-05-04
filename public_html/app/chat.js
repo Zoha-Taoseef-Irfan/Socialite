@@ -2,6 +2,7 @@
 Authors: Amimul Ehsan Zoha, Taoseef Aziz, Irfan Ahmad
 Course: CS337 Spring 2023
 Project: Socialite Social Media
+
 Description: This JavaScript file contains functions for a social media web application.
 The first function, getUserName(), retrieves the username from a cookie and returns it.
 The following functions, myProfile(), chat(), exploreFriends(), and viewFollowing(),
