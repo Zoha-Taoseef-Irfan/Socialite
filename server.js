@@ -455,26 +455,23 @@ app.post('/chats/post', parser.json(),(req, res) => {
     });
   });
 
-  // Return all users that are being followed
-  app.get('/followed/:userID', async (req, res) => {
-    const userID = req.params.userID;
-    try {
-      const user = await User.findOne({ username: userID });
-      console.log("USERNAME: "  + user);
-      const followedUsers = [];
-      for (let i = 0; i < user.following.length; i++) {
-        followedUsers.push(user.following[i]);
-      }
-
-      const test = await User.findOne({ _id : followedUsers[0] });
-      console.log("Test Object: "  + test);
-      res.json(test);
-    } catch (err) {
-      console.error(err);
-      res.status(500).send('Error retrieving followed users.');
-    }
+  // Return all users currently registered on Socialite
+  app.get('/followed/:userID', (req, res) => {
+    let p1 = User.find({}).exec();
+    p1.then((results) => {
+      const users = results.map((user) => ({
+        username: user.username,
+        img: user.img,
+      }));
+      res.json(users);
+    });
+    p1.catch((error) => {
+      console.log(error);
+      res.status(500).send('Error retrieving users.');
+    });
   });
 
+  
   // Create friendship between two users
   app.post('/followUser', async function(req, res) {
     const userID = req.body.user;

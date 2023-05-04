@@ -7,22 +7,33 @@ function getUserName() {
     return currentUser;
 }
 
-async function getAllFollowing() {
-  let url = '/followed/'+ getUserName();
+function getAllFollowing() {
+  let url = '/followed/'+getUserName();
+  console.log("fetching at URL: "+url)
   let p = fetch(url);
-  console.log(p);
   let ps = p
     .then((response) => {
+      console.log("got response at URL: "+response)
+
       return response.json();
     })
-    .then((followedUser) => {
+    .then((users) => {
+      console.log("users = "+users)
+      console.log()
+
       let html = '';
-      console.log("USER: " + followedUser[0]);
-      for (let i = 0; i < followedUser.length; i++) {
-        html += generateFollowlistHTML(followedUser[i].username, followedUser[i].img);
+      for (let i = 0; i < users.length; i++) {
+        
+        console.log("users[i].name = "+users[i].username)
+        // console.log("users[i].following = "+users[i].following)
+        console.log("users[i].img = "+users[i].img)
+
+        // need to filter with users followed: 
+        // user.following.includes(friend._id) --> need following list
+        html +=  generateFollowlistHTML(users[i].username, users[i].img);
       }
       let parentContainer = document.createElement('div');
-      parentContainer.setAttribute('id', 'followed-container');
+      parentContainer.setAttribute('id', 'friends-container');
       parentContainer.innerHTML = html;
       let x = document.getElementById('followedUsers');
       if (x) {
@@ -32,16 +43,15 @@ async function getAllFollowing() {
     })
     .catch((error) => {
       console.log(error);
-      alert('Something went wrong trying to display followed Users');
+      alert('Something went wrong trying to display friends');
     });
 }
-
 
 function getFollowingData() {
   console.log('getFollowingData')
 }
 
-async function generateFollowlistHTML(username, profilePicture) {
+function generateFollowlistHTML(username, profilePicture) {
   const userDiv = document.createElement('div');
   const avatarImg = document.createElement('img');
   const usernameDiv = document.createElement('div');
