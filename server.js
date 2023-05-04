@@ -387,9 +387,8 @@ app.get('/chats', (req, res) => {
   p1.then ((results) => {
     let resultString = '';
     for (i in results){
-      resultString += "<b>" + results[i].alias + "</b>" + ": " +
-      results[i].message + '<br>';
-    //   results[i].stat  + // do time here 
+      resultString += "<div class=msgAlias>" + results[i].alias + "</div>" +
+      "<div class=msgText>" + results[i].message + "</div>";
     }
     res.end(resultString);
   });

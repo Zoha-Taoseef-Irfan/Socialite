@@ -219,14 +219,13 @@ body {
   background-color: #3b5998;
   border: none;
   border-radius: 5px;
-  color: #090000;
+  color: #ffdd00;
   cursor: pointer;
   font-size: 3rem;
-  padding: 5px 10px;
-  text-align:right;
-  text-decoration: none;
+  margin-left: 20px;
+  text-align:center;
+  text-decoration:wavy;
   display: inline-block;
-
   background-size: cover;
   width: 60px;
   height: 60px;
