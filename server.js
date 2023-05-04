@@ -438,6 +438,18 @@ app.post('/chats/post', parser.json(),(req, res) => {
       
    }
 
+   // Return all users currently registered on Socialite
+  app.get('/users/:username', (req, res) => {
+    let p1 = User.find({username:req.params.username}).exec();
+    p1.then((results) => {
+      res.json(results[0]);
+    });
+    p1.catch((error) => {
+      console.log(error);
+      res.status(500).send('Error retrieving users.');
+    });
+  });
+
 
   // Return all users currently registered on Socialite
   app.get('/users', (req, res) => {

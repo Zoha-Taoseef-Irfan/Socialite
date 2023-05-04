@@ -14,32 +14,45 @@ function getAllFollowing() {
   let ps = p
     .then((response) => {
       console.log("got response at URL: "+response)
-
       return response.json();
     })
-    .then((users) => {
-      console.log("users = "+users)
+    .then((allusers) => {
+      console.log("users = "+allusers)
       console.log()
 
-      let html = '';
-      for (let i = 0; i < users.length; i++) {
-        
-        console.log("users[i].name = "+users[i].username)
-        // console.log("users[i].following = "+users[i].following)
-        console.log("users[i].img = "+users[i].img)
+      let url = '/users/'+getUserName();
+      console.log("fetching at URL: "+url)
+      let p2 = fetch(url);
+      p2.then(response=> {
+        response.json().then(userObj=> {
+          let html = '';
+          for (let i = 0; i < allusers.length; i++) {
+            console.log("OBJECT.FOLLOWINGL "+userObj.following)
 
-        // need to filter with users followed: 
-        // user.following.includes(friend._id) --> need following list
-        html +=  generateFollowlistHTML(users[i].username, users[i].img);
-      }
-      let parentContainer = document.createElement('div');
-      parentContainer.setAttribute('id', 'friends-container');
-      parentContainer.innerHTML = html;
-      let x = document.getElementById('followedUsers');
-      if (x) {
-        x.innerHTML = '';
-        x.appendChild(parentContainer);
-      }
+            console.log("allusers[i].name = "+allusers[i].username)
+            // console.log("users[i].following = "+users[i].following)
+            console.log("allusers[i].img = "+allusers[i].img)
+
+            // need to filter with users followed: 
+            // user.following.includes(friend._id) --> need following list
+              
+
+              html +=  generateFollowlistHTML(allusers[i].username, allusers[i].img);
+            }
+            let parentContainer = document.createElement('div');
+            parentContainer.setAttribute('id', 'friends-container');
+            parentContainer.innerHTML = html;
+            let x = document.getElementById('followedUsers');
+            if (x) {
+              x.innerHTML = '';
+              x.appendChild(parentContainer);
+            }
+      })
+        
+      }).catch((err)=> {
+        console.log(err);
+      })
+
     })
     .catch((error) => {
       console.log(error);
