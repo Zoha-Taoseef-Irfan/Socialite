@@ -1,3 +1,17 @@
+/*
+Authors: Amimul Ehsan Zoha, Taoseef Aziz, Irfan Ahmad
+Course: CS337 Spring 2023
+Project: Socialite Social Media
+
+Description: This JavaScript file contains functions for generating HTML elements for a social media web application profile page and user posts.
+The generateProfileDataHTML() function takes in a username, avatar, and bio, creates HTML elements for a user profile, sets their class names and content, 
+appends them as child elements to a parent div, and returns the parent div as an HTML string.
+The getProfileData() function sends a request to the server for a user's profile data using their username, parses the response as JSON, generates 
+HTML elements for the user's profile using the first element of the returned array, and sets the innerHTML of a designated div with the generated HTML string.
+The getPostsForUser() function sends a request to the server for a user's posts using their username, parses the response as JSON, iterates through each post in the returned array, 
+generates HTML elements for each post using various properties of the post object, and sets the innerHTML of a designated div with the generated HTML strings.
+*/
+
 function generateProfileDataHTML(username, avatar, bio) {
   // Create the HTML elements
   const profileDiv = document.createElement('div');

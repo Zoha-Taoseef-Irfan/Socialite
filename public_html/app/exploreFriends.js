@@ -1,5 +1,18 @@
+/*
+Authors: Amimul Ehsan Zoha, Taoseef Aziz, Irfan Ahmad
+Course: CS337 Spring 2023
+Project: Socialite Social Media
+
+This code defines several functions related to following users and displaying users for the Socialite Social Media project. 
+The getUserName() function retrieves the username of the current user from a cookie and sets it as the global variable currentUser. 
+The addFriend() function adds a friend by sending a POST request to the server and disabling the follow button. 
+The exploreFriends() function displays all users on the server by generating HTML elements with the generateUsersHTML() function. 
+The generateUsersHTML() function creates HTML elements for each user, including their profile picture, username, and add friend button. 
+The click event listener at the bottom of the code executes the addFriend() function when a user clicks the add friend button.
+*/
+
 currentUser = getUserName();
-// test comment
+
 function getUserName() {
     console.log(document.cookie);
     let userName = document.cookie.split("%22")[3];
